@@ -20,6 +20,26 @@ final class ProductInformationView: UIView {
         
         return segmentedControl
     }()
+    private let imagePickerButton: UIButton = {
+        let button: UIButton = UIButton(frame: .zero)
+        
+        button.setTitle("+", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.backgroundColor = .systemGray3
+        
+        return button
+    }()
+    private let imageStackView: ImageStackView = {
+        let stackView: ImageStackView = ImageStackView()
+        
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
+    }()
     private let priceAndCurrencyStackView: UIStackView = {
         let stackView: UIStackView = UIStackView()
         
@@ -42,6 +62,22 @@ final class ProductInformationView: UIView {
         
         return stackView
     }()
+    private let imageScrollView: UIScrollView = {
+        let scrollView: UIScrollView = UIScrollView()
+        
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.bounces = false
+        
+        return scrollView
+    }()
+    private let mainScrollView: UIScrollView = {
+        let scrollView: UIScrollView = UIScrollView()
+        
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.bounces = false
+        
+        return scrollView
+    }()
     
     weak var textFieldDelegate: UITextFieldDelegate? {
         didSet { setUpTextFieldDelegate() }
@@ -54,6 +90,9 @@ final class ProductInformationView: UIView {
     init() {
         super.init(frame: .zero)
         setUpViewsIfNeeded()
+        setUpMainScrollView()
+        setUpImageScrollView()
+        setUpCurrencySegmentedControl()
     }
     
     required init?(coder: NSCoder) {
@@ -64,22 +103,63 @@ final class ProductInformationView: UIView {
         backgroundColor = .white
         priceAndCurrencyStackView.addArrangedSubview(priceTextField)
         priceAndCurrencyStackView.addArrangedSubview(currencySegmentedControl)
+        imageStackView.addArrangedSubview(imagePickerButton)
+        imageScrollView.addSubview(imageStackView)
+        contentStackView.addArrangedSubview(imageScrollView)
         contentStackView.addArrangedSubview(nameTextField)
         contentStackView.addArrangedSubview(priceAndCurrencyStackView)
         contentStackView.addArrangedSubview(discountedPriceTextField)
         contentStackView.addArrangedSubview(stockTextField)
         contentStackView.addArrangedSubview(descriptionTextView)
-        addSubview(contentStackView)
         
+        mainScrollView.addSubview(contentStackView)
+        addSubview(mainScrollView)
+    }
+    
+    private func setUpMainScrollView() {
         let spacing: CGFloat = 10
         let safeArea: UILayoutGuide = safeAreaLayoutGuide
         
+        let constraints: (width: NSLayoutConstraint, height: NSLayoutConstraint) = (
+            width: contentStackView.widthAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.widthAnchor),
+            height: contentStackView.heightAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.heightAnchor))
+        constraints.height.priority = .init(rawValue: 1)
+        
         NSLayoutConstraint.activate([
-            contentStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: spacing),
-            contentStackView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -spacing),
-            contentStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: spacing),
-            contentStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -spacing)
+            mainScrollView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: spacing),
+            mainScrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -spacing),
+            mainScrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: spacing),
+            mainScrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -spacing),
+            contentStackView.topAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.topAnchor),
+            contentStackView.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor),
+            contentStackView.leadingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.leadingAnchor),
+            contentStackView.trailingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.trailingAnchor),
+            currencySegmentedControl.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.3),
+            constraints.width,
+            constraints.height
         ])
+    }
+    
+    private func setUpImageScrollView() {
+        let constraints: (width: NSLayoutConstraint, height: NSLayoutConstraint) = (
+            width: imageStackView.widthAnchor.constraint(equalTo: imageScrollView.frameLayoutGuide.widthAnchor),
+            height: imageStackView.heightAnchor.constraint(equalTo: imageScrollView.frameLayoutGuide.heightAnchor))
+        constraints.width.priority = .init(rawValue: 1)
+        
+        NSLayoutConstraint.activate([
+            imageScrollView.heightAnchor.constraint(equalToConstant: 150),
+            imageStackView.topAnchor.constraint(equalTo: imageScrollView.contentLayoutGuide.topAnchor),
+            imageStackView.bottomAnchor.constraint(equalTo: imageScrollView.contentLayoutGuide.bottomAnchor),
+            imageStackView.leadingAnchor.constraint(equalTo: imageScrollView.contentLayoutGuide.leadingAnchor),
+            imageStackView.trailingAnchor.constraint(equalTo: imageScrollView.contentLayoutGuide.trailingAnchor),
+            constraints.width,
+            constraints.height
+        ])
+    }
+    
+    private func setUpCurrencySegmentedControl() {
+        currencySegmentedControl.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+        currencySegmentedControl.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
     }
     
     private func setUpTextFieldDelegate() {
