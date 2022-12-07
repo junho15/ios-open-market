@@ -16,6 +16,8 @@ enum LayoutMaker {
             return makeGridLayout()
         case .imagePicker:
             return makeImagePickerLayout()
+        case .image:
+            return makeImageLayout()
         }
     }
     
@@ -97,6 +99,35 @@ enum LayoutMaker {
                                                         bottom: spacing,
                                                         trailing: spacing)
         section.interGroupSpacing = spacing
+        
+        return UICollectionViewCompositionalLayout(section: section)
+    }
+    
+    private static func makeImageLayout() -> UICollectionViewLayout {
+        let spacing: CGFloat = CGFloat(10)
+        let itemSize: NSCollectionLayoutSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0))
+        let item: NSCollectionLayoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize: NSCollectionLayoutSize
+        if [UIDeviceOrientation.landscapeLeft, UIDeviceOrientation.landscapeRight].contains(UIDevice.current.orientation) {
+            groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(400))
+        } else {
+            groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalWidth(0.8))
+        }
+        let group: NSCollectionLayoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section: NSCollectionLayoutSection = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.contentInsets = NSDirectionalEdgeInsets(top: spacing,
+                                                        leading: 0,
+                                                        bottom: spacing,
+                                                        trailing: 0)
         
         return UICollectionViewCompositionalLayout(section: section)
     }

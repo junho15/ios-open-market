@@ -9,6 +9,7 @@ enum CollectionViewLayout {
     case list
     case grid
     case imagePicker
+    case image
     
     static var defaultLayout: CollectionViewLayout {
         return .list

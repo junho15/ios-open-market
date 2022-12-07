@@ -64,6 +64,8 @@
 		EBDB22C32922819D0072AE13 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = D382743429226F0200A51A0A /* Page.swift */; };
 		EBEC414F292D079400CDBE6A /* LayoutSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEC414E292D079400CDBE6A /* LayoutSegmentedControl.swift */; };
 		EBF9175F293B29E100D5BFF0 /* ProductRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF9175E293B29E100D5BFF0 /* ProductRegistrationViewController.swift */; };
+		EBFA8D8E2940730B005E58DD /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFA8D8D2940730B005E58DD /* ProductDetailView.swift */; };
+		EBFA8D902940834A005E58DD /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFA8D8F2940834A005E58DD /* ProductDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +134,8 @@
 		EBDB22BA2922818A0072AE13 /* PageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTests.swift; sourceTree = "<group>"; };
 		EBEC414E292D079400CDBE6A /* LayoutSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSegmentedControl.swift; sourceTree = "<group>"; };
 		EBF9175E293B29E100D5BFF0 /* ProductRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRegistrationViewController.swift; sourceTree = "<group>"; };
+		EBFA8D8D2940730B005E58DD /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
+		EBFA8D8F2940834A005E58DD /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +264,7 @@
 				EB9E8896292DC34400FC1EF5 /* CollectionView */,
 				EB9E8898292DC38300FC1EF5 /* Label */,
 				EBEC414E292D079400CDBE6A /* LayoutSegmentedControl.swift */,
+				EBFA8D8D2940730B005E58DD /* ProductDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -375,6 +380,7 @@
 				C70FB0FE25BEF61C00C9924E /* ViewController.swift */,
 				D3D6B6282935A8FF0000FAD4 /* ProductManagementViewController.swift */,
 				EBF9175E293B29E100D5BFF0 /* ProductRegistrationViewController.swift */,
+				EBFA8D8F2940834A005E58DD /* ProductDetailViewController.swift */,
 				C70FB0FA25BEF61C00C9924E /* AppDelegate.swift */,
 				C70FB0FC25BEF61C00C9924E /* SceneDelegate.swift */,
 			);
@@ -515,6 +521,7 @@
 			files = (
 				D3D6B6302935D72E0000FAD4 /* NameTextField.swift in Sources */,
 				D34633F22939F47200570715 /* UIImage+.swift in Sources */,
+				EBFA8D8E2940730B005E58DD /* ProductDetailView.swift in Sources */,
 				EBB0CD3A2939A1E4004CE6E2 /* Secret.swift in Sources */,
 				EB9E8895292DC32D00FC1EF5 /* Section.swift in Sources */,
 				EB9E8891292DB92900FC1EF5 /* OpenMarketCollectionView.swift in Sources */,
@@ -535,6 +542,7 @@
 				D36FAE9C29373DA300C3645D /* Requestable.swift in Sources */,
 				EBDB229529226B460072AE13 /* Currency.swift in Sources */,
 				D382743529226F0200A51A0A /* Page.swift in Sources */,
+				EBFA8D902940834A005E58DD /* ProductDetailViewController.swift in Sources */,
 				D3D6B6292935A8FF0000FAD4 /* ProductManagementViewController.swift in Sources */,
 				EBDB2293292269AE0072AE13 /* Product.swift in Sources */,
 				D3771F48293DA552000A8761 /* IndicatorView.swift in Sources */,

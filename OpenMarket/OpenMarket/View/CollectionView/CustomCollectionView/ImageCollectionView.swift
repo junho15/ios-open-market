@@ -41,4 +41,18 @@ final class ImageCollectionView: UICollectionView {
             return collectionView.dequeueConfiguredReusableCell(using: imageCellRegistration, for: indexPath, item: view)
         }
     }
+    
+    func appendImage(_ image: UIImage?) {
+        guard let image: UIImage = image,
+              var currentSnapshot: NSDiffableDataSourceSnapshot<Section, UIView> = imagePickerDataSource?.snapshot() else {
+            return
+        }
+        
+        if currentSnapshot.numberOfSections == 0 {
+            currentSnapshot.appendSections([.main])
+        } 
+        currentSnapshot.appendItems([UIImageView(image: image)])
+        
+        imagePickerDataSource?.apply(currentSnapshot)
+    }
 }
