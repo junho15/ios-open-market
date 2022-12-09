@@ -136,12 +136,38 @@ final class ProductListViewController: UIViewController {
             }
         }
     }
+    
+    private func pushDetailView(of productNumber: Int) {
+        fetchProduct(of: productNumber) { [weak self] product in
+            if let product = product {
+                let nextViewController: ProductDetailViewController = .init()
+                nextViewController.setUpProduct(product)
+                self?.navigationController?.pushViewController(nextViewController, animated: false)
+            }
+        }
+    }
+    
+    private func fetchProduct(of productNumber: Int, completion: @escaping (Product?) -> Void) {
+        let networkManger: NetworkManager = .init(openMarketAPI: .fetchProduct(productNumber: productNumber))
+        networkManger.network { (data, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                completion(nil)
+            } else if let data = data, let product: Product = try? JSONDecoder().decode(Product.self, from: data) {
+                DispatchQueue.main.async {
+                    completion(product)
+                }
+            }
+        }
+    }
 }
 //MARK: - Extension UICollectionViewDelegate
 extension ProductListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        navigationController?.pushViewController(ProductDetailViewController(), animated: false)
+        if let productNumber: Int = self.collectionView.fetchProductNumber(of: indexPath) {
+            pushDetailView(of: productNumber)
+        }
     }
 }
 extension ProductListViewController: OpenMarketCollectionViewDelegate {

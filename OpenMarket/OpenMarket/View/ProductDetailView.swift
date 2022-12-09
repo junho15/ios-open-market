@@ -153,7 +153,9 @@ final class ProductDetailView: UIView {
         DispatchQueue.global().async {
             images.forEach {
                 imageParser.parse($0.url) { image in
-                    self.collectionView.appendImage(image)
+                    DispatchQueue.main.async {
+                        self.collectionView.appendImage(image)
+                    }
                     self.semaphore.signal()
                 }
                 self.semaphore.wait()

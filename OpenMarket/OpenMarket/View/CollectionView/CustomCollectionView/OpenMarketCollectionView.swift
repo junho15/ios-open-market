@@ -63,6 +63,11 @@ final class OpenMarketCollectionView: UICollectionView {
     func applySnapshot(_ snapshot: NSDiffableDataSourceSnapshot<Section, Product>) {
         openMarketDataSource?.apply(snapshot, animatingDifferences: false)
     }
+    
+    func fetchProductNumber(of indexPath: IndexPath) -> Int? {
+        return openMarketDataSource?.itemIdentifier(for: indexPath)?.id
+    }
+    
     //MARK: - Cell
     private func registerCell() {
         listCellRegistration = UICollectionView.CellRegistration<ProductListCell, Product> { (cell, indexPath, product) in
