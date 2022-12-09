@@ -19,6 +19,13 @@ final class ProductDetailViewController: UIViewController {
     func setUpProduct(_ product: Product) {
         self.title = product.name
         productDetailView.updateWithProduct(product)
+        fetchImages(from: product.images) { images in
+            DispatchQueue.main.async {
+                self.productDetailView.setUpImages(images: images.compactMap {
+                    UIImageView(image: $0)
+                })
+            }
+        }
     }
     
     private func configure() {
@@ -52,6 +59,27 @@ final class ProductDetailViewController: UIViewController {
         navigationItem.setRightBarButton(editBarButtonItem, animated: false)
     }
     
+    private func fetchImages(from productImages: [ProductImage]?, completion: @escaping ([UIImage]) -> Void) {
+        if let productImages = productImages {
+            var imageContainer: [UIImage] = []
+            var imageParser: ImageParser = ImageParser()
+            let imageSemaphore: DispatchSemaphore = .init(value: 0)
+            DispatchQueue.global().async {
+                productImages.forEach {
+                    imageParser.parse($0.url) { image in
+                        if let image = image {
+                            imageContainer.append(image)
+                        }
+                        imageSemaphore.signal()
+                    }
+                    imageSemaphore.wait()
+                }
+                completion(imageContainer)
+            }
+        }
+    }
+    
+    
     @objc
     private func showEditActionSheet(_ sender: UIBarButtonItem) {
         let editActionSheetController: UIAlertController = .init(title: nil,
@@ -82,7 +110,7 @@ final class ProductDetailViewController: UIViewController {
         
         present(editActionSheetController, animated: true)
     }
-    
+
     private func deleteProduct(completion: @escaping (Result<Product, Error>) -> Void) {
         guard let product: Product = productDetailView.fetchProduct(),
               let productID: Int = product.id else {
@@ -116,6 +144,7 @@ final class ProductDetailViewController: UIViewController {
         
         let updateViewController: ProductUpdateViewController = .init()
         updateViewController.setUpContentData(of: product, with: imageSnapshot)
+        updateViewController.productUpdateDelegate = self
         navigationController?.pushViewController(updateViewController, animated: false)
     }
     
@@ -136,5 +165,15 @@ final class ProductDetailViewController: UIViewController {
         resultAlertController.addAction(alertAction)
         
         present(resultAlertController, animated: true)
+    }
+}
+
+extension ProductDetailViewController: ProductUpdateDelegate {
+    func productUpdate(didUpdate: Bool, _ product: Product?) {
+        if didUpdate, let product = product {
+            setUpProduct(product)
+        } else {
+            productDetailView.collectionView.reloadData()
+        }
     }
 }

@@ -7,14 +7,24 @@
 
 import UIKit
 
+protocol ProductUpdateDelegate: AnyObject {
+    func productUpdate(didUpdate: Bool, _ product: Product?)
+}
+
 final class ProductUpdateViewController: ProductManagementViewController {
     private let productUpdateTitle: String = "상품수정"
     private var doneWorkItem: DispatchWorkItem? = nil
     private var productID: Int? = nil
+    weak var productUpdateDelegate: ProductUpdateDelegate? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
     }
     
     func setUpContentData(of newProduct: Product, with imagesSnapshot: NSDiffableDataSourceSnapshot<Section, UIView>) {
@@ -51,6 +61,7 @@ final class ProductUpdateViewController: ProductManagementViewController {
         
         if isSuccess {
             alertAction = UIAlertAction(title: "확인", style: .cancel) { [weak self] (_) in
+                
                 self?.navigationController?.popViewController(animated: false)
             }
         } else {
@@ -63,6 +74,7 @@ final class ProductUpdateViewController: ProductManagementViewController {
     
     @objc
     private func tappedCancelButton(_ sender: UIButton) {
+        productUpdateDelegate?.productUpdate(didUpdate: false, nil)
         self.navigationController?.popViewController(animated: false)
     }
 
@@ -74,16 +86,17 @@ final class ProductUpdateViewController: ProductManagementViewController {
         }
         let workItem: DispatchWorkItem = DispatchWorkItem {
             let registrationManager: NetworkManager = .init(openMarketAPI: .update(product: product))
-            registrationManager.network { [weak self] data, error in
+            registrationManager.network { data, error in
                 if let error = error {
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
                         print(error.localizedDescription)
                         self?.doneWorkItem = nil
                         self?.showResultAlert(isSuccess: false)
                     }
-                } else if let _ = data {
-                    DispatchQueue.main.async {
+                } else if let data = data, let product: Product = try? JSONDecoder().decode(Product.self, from: data) {
+                    DispatchQueue.main.async { [weak self] in
                         self?.doneWorkItem = nil
+                        self?.productUpdateDelegate?.productUpdate(didUpdate: true, product)
                         self?.showResultAlert(isSuccess: true)
                     }
                 }

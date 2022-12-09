@@ -46,16 +46,19 @@ final class ImageCollectionView: UICollectionView {
     }
     
     func appendImage(_ image: UIImage?) {
-        guard let image: UIImage = image,
-              var currentSnapshot: NSDiffableDataSourceSnapshot<Section, UIView> = imagePickerDataSource?.snapshot() else {
+        guard let image: UIImage = image else {
             return
         }
         
-        if currentSnapshot.numberOfSections == 0 {
-            currentSnapshot.appendSections([.main])
-        } 
-        currentSnapshot.appendItems([UIImageView(image: image)])
+        var snapshot: NSDiffableDataSourceSnapshot<Section, UIView> = .init()
+        snapshot.appendSections([.main])
+        if let currentSnapshot: NSDiffableDataSourceSnapshot<Section, UIView> = imagePickerDataSource?.snapshot(),
+            currentSnapshot.numberOfItems > 0 {
+            snapshot.appendItems(currentSnapshot.itemIdentifiers)
+            snapshot.deleteItems([UIImageView(image: image)])
+        }
+        snapshot.appendItems([UIImageView(image: image)])
         
-        imagePickerDataSource?.apply(currentSnapshot)
+        imagePickerDataSource?.apply(snapshot)
     }
 }

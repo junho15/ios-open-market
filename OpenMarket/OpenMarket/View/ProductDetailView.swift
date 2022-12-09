@@ -8,10 +8,11 @@
 import UIKit
 
 final class ProductDetailView: UIView {
-    private let collectionView: ImageCollectionView = {
+    let collectionView: ImageCollectionView = {
         let imageCollectionView: ImageCollectionView = ImageCollectionView(frame: .zero, collectionViewLayout: .image)
         
         imageCollectionView.isPagingEnabled = true
+        imageCollectionView.bounces = false
         imageCollectionView.decelerationRate = .fast
         imageCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
@@ -66,7 +67,6 @@ final class ProductDetailView: UIView {
     var product: Product? {
         didSet {
             setUpDataIfNeeded()
-            setUpImages()
         }
     }
     private let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
@@ -151,23 +151,12 @@ final class ProductDetailView: UIView {
         descriptionLabel.text = product.description
     }
     
-    private func setUpImages() {
-        guard let product: Product = product,
-        let images: [ProductImage] = product.images else {
-            return
-        }
+    func setUpImages(images: [UIImageView]) {
+        var snapshot: NSDiffableDataSourceSnapshot<Section, UIView> = .init()
         
-        var imageParser: ImageParser = ImageParser()
-        DispatchQueue.global().async {
-            images.forEach {
-                imageParser.parse($0.url) { image in
-                    DispatchQueue.main.async {
-                        self.collectionView.appendImage(image)
-                    }
-                    self.semaphore.signal()
-                }
-                self.semaphore.wait()
-            }
-        }
+        snapshot.appendSections([.main])
+        snapshot.appendItems(images)
+        
+        collectionView.applySnapshot(snapshot)
     }
 }

@@ -110,16 +110,8 @@ enum LayoutMaker {
             heightDimension: .fractionalHeight(1.0))
         let item: NSCollectionLayoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize: NSCollectionLayoutSize
-        if [UIDeviceOrientation.landscapeLeft, UIDeviceOrientation.landscapeRight].contains(UIDevice.current.orientation) {
-            groupSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .absolute(400))
-        } else {
-            groupSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalWidth(0.8))
-        }
+        let groupSize: NSCollectionLayoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                                       heightDimension: .fractionalWidth(0.74))
         let group: NSCollectionLayoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section: NSCollectionLayoutSection = NSCollectionLayoutSection(group: group)
