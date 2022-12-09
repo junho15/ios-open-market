@@ -27,11 +27,15 @@ enum OpenMarketAPI: Requestable {
         case .registration:
             return "/api/products"
         case .update(let product):
-            return "/api/products/\(product.id)"
+            if let productID: Int = product.id {
+                return "/api/products/\(productID)"
+            } else {
+                return "/api/products"
+            }
         case .inquiryDeregistrationURI(let productId):
             return "/api/products/\(productId)/archived"
         case .deregistration(let URI):
-            return "/api/products/\(URI)"
+            return "\(URI)"
         }
     }
     var method: HttpMethod {
@@ -63,9 +67,9 @@ enum OpenMarketAPI: Requestable {
         case .registration(_, _, let boundary):
             return ["identifier": "ecae4d3d-6941-11ed-a917-59a39ea07e01", "Content-Type": "multipart/form-data; boundary=\(boundary)"]
         case .update:
-            return ["identifier": "ecae4d3d-6941-11ed-a917-59a39ea07e01"]
+            return ["identifier": "ecae4d3d-6941-11ed-a917-59a39ea07e01", "Content-Type": "application/json"]
         case .inquiryDeregistrationURI:
-            return ["identifier": "ecae4d3d-6941-11ed-a917-59a39ea07e01"]
+            return ["identifier": "ecae4d3d-6941-11ed-a917-59a39ea07e01", "Content-Type": "application/json"]
         case .deregistration:
             return ["identifier": "ecae4d3d-6941-11ed-a917-59a39ea07e01"]
         }

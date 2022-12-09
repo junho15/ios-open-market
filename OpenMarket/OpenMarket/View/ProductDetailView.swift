@@ -63,7 +63,7 @@ final class ProductDetailView: UIView {
         
         return scrollView
     }()
-    private var product: Product? {
+    var product: Product? {
         didSet {
             setUpDataIfNeeded()
             setUpImages()
@@ -82,6 +82,14 @@ final class ProductDetailView: UIView {
     
     func updateWithProduct(_ newProduct: Product) {
         self.product = newProduct
+    }
+    
+    func fetchProduct() -> Product? {
+        return self.product
+    }
+    
+    func fetchImageSnapshot() -> NSDiffableDataSourceSnapshot<Section, UIView>? {
+        return collectionView.fetchSnapshot()
     }
     
     private func configure() {

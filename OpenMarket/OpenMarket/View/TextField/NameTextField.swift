@@ -39,6 +39,11 @@ final class NameTextField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func draw(_ rect: CGRect) {
+        setUpStyleIfNeeded()
+        calculateCountIfNeeded()
+    }
+    
     private func configure() {
         backgroundColor = .white
         font = .preferredFont(forTextStyle: .body)

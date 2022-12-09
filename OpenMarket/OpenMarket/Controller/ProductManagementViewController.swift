@@ -126,8 +126,9 @@ class ProductManagementViewController: UIViewController {
         descriptionTextView.delegate = self
     }
 
-    func makeProductByInputedData() -> ProductToRequest? {
-        return ProductToRequest(name: nameTextField.text,
+    func makeProductByInputedData(with productID: Int? = nil) -> ProductToRequest? {
+        return ProductToRequest(id: productID,
+                                name: nameTextField.text,
                                 description: descriptionTextView.text,
                                 currency: .init(currencySegmentedControl.selectedSegmentIndex),
                                 price: priceTextField.text,

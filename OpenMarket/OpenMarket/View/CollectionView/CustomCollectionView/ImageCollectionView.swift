@@ -24,6 +24,10 @@ final class ImageCollectionView: UICollectionView {
     func applySnapshot(_ snapshot: NSDiffableDataSourceSnapshot<Section, UIView>) {
         imagePickerDataSource?.apply(snapshot, animatingDifferences: true)
     }
+    
+    func fetchSnapshot() -> NSDiffableDataSourceSnapshot<Section, UIView>? {
+        return imagePickerDataSource?.snapshot()
+    }
     //MARK: - Cell
     private func registerCell() {
         imagePickerCellRegistration = UICollectionView.CellRegistration<ImagePickerCell, UIView> { (cell, indexPath, view) in

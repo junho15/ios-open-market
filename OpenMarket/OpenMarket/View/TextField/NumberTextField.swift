@@ -24,6 +24,10 @@ final class NumberTextField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func draw(_ rect: CGRect) {
+        setUpStyleIfNeeded()
+    }
+    
     private func configure() {
         backgroundColor = .white
         font = .preferredFont(forTextStyle: .body)

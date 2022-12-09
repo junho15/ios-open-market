@@ -18,6 +18,7 @@ final class ProductListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViewsIfNeeded()
+        self.title = ""
     }
     
     override func viewWillAppear(_ animated: Bool) {
