@@ -16,8 +16,9 @@
 ## 🗣 소개
 [Ayaan🦖](https://github.com/oneStar92), [준호](https://github.com/junho15) 의 간단한 마켓기능을 이용할 수 있는 프로젝트 입니다.
 Mordern Collection View 활용하여 LIST와 GRID 형태로 상품 목록 화면을 보여줍니다.
+상품을 등록할 수 있고 등록한 상품을 수정, 삭제할 수 있습니다.
 
-***개발 기간 : 2022-11-14 ~ 2022-12-02***
+***개발 기간 : 2022-11-14 ~ 2022-12-09***
 
 <br>
 
@@ -89,6 +90,23 @@ Mordern Collection View 활용하여 LIST와 GRID 형태로 상품 목록 화면
 - 2022.12.02
     - OpenMarketAPI 구현
     - NetworkManager 구현
+- 2022.12.03
+    - ProductManagementViewController 구현
+    - ProductRegistrationViewController 구현
+- 2022.12.05
+    - RefreshControl, Pagination 구현
+- 2022.12.06
+    - Product 등록 및 최소 조건 충족 확인 기능 구현
+- 2022.12.07
+    - 키보드 내리는 기능 구현
+
+### Step 4
+
+- 2022.12.07
+    - ProductDetailViewController 구현
+- 2022.12.09
+    - ProductUpdateViewController 구현
+    - Product 삭제 기능 구현
 
 <br>
 
@@ -100,7 +118,7 @@ Mordern Collection View 활용하여 LIST와 GRID 형태로 상품 목록 화면
 
 ### Network
 
-<img src="https://i.imgur.com/ZpuPL5o.jpg" width="500px">
+<img src="https://i.imgur.com/K8oMVw7.jpg" width="500px">
 
 <br>
 
@@ -112,11 +130,11 @@ Mordern Collection View 활용하여 LIST와 GRID 형태로 상품 목록 화면
 
 |LIST GRID 전환|등록 화면|수정 화면|
 |:---:|:---:|:---:|
-|<img src="https://i.imgur.com/sm69aR6.gif" width="200">|추후 작성|추후 작성|
+|<img src="https://i.imgur.com/sm69aR6.gif" width="200">|<img src="https://i.imgur.com/FtvgGER.gif" width="200">|<img src="https://i.imgur.com/vrMXbwu.gif" width="200">|
 
 |삭제|페이지 네이션|리스트 새로고침|
 |:---:|:---:|:---:|
-|추후 작성|추후 작성|추후 작성|
+|<img src="https://i.imgur.com/ZYVHxt2.gif" width="200">|<img src="https://i.imgur.com/pfosfBm.gif" width="200">|<img src="https://i.imgur.com/RLavIBk.gif" width="200">|
 
 <br>
 
@@ -329,6 +347,138 @@ Mordern Collection View 활용하여 LIST와 GRID 형태로 상품 목록 화면
 - `setContentCompressionResistancePriority`와 `setContentHuggingPriority`를 이용해서 Hugging 및 Compression Priority를 조정해여 해결했습니다.
 
 <br>
+
+### 상품 등록시 최소 요구사항 충족 확인
+- 상품 등록시에 이미지는 최소 1장, 이름은 최소 3글자, 가격은 기본값 없음, 설명은 최소 10글자가 필요했습니다.
+- 해당 기능을 구현하기 위해서 done버튼을 클릭시 최소 조건이 맞는지 일일이 확인하여 조건이 맞으면 done버튼의 기능을 수행하도록 구현하려 했습니다.
+- 사용자가 조건을 충족했는지 확인하기 위해서는 done버튼을 클릭해 봐야 되는 문제가 발생했고, `NotificationCenter`를 이용해 정보가 수정되면 수정된 항목은 조건을 충족하는지 확인하고 모든 항목이 충족되면 done버튼을 활성화 시켜서 해당 문제를 해결했습니다.
+
+<details>
+<summary>코드 보기</summary>
+<div markdown="1">
+
+```swift
+    private func setUpNotification() {
+        ...
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(checkEnoughContents),
+                                               name: UITextField.textDidChangeNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(checkEnoughContents),
+                                               name: UITextView.textDidChangeNotification,
+                                               object: nil)
+    }
+```
+    
+</div>
+</details>
+<br>
+
+### 상품 List PageNation
+- 상품 List를 스크롤할 때 다음 Page에 해당하는 값을 불러오도록 하는 기능을 두가지 방법중 어떤 방법을 통해서 구현할지 고민했습니다.
+    - extension UIScrollView 활용
+        - 일정 수준 스크롤이 내려가면 다음 페이지를 요청하는 방식
+    - UICollectionView supplementaryViewProvider 활용
+        - supplementaryViewProvider를 Section Footer로 사용해서 해당 View가 불리게 되면 다음 페이지를 요청하는 방식
+- 위 두 방식 중 CollectionView의 supplementaryViewProvider를 이용해서 구현했습니다.
+
+<details>
+<summary>코드 보기</summary>
+<div markdown="1">
+
+```swift
+private func registerSupplementaryView() {
+    indicatorViewRegistration = UICollectionView.SupplementaryRegistration(elementKind: UICollectionView.elementKindSectionFooter) { [weak self] (supplementaryView, elementKind, indexPath) in
+        if elementKind == UICollectionView.elementKindSectionFooter {
+            self?.hasNextPage = self?.openMarketDelegate?.openMarketCollectionView(didRequestNextPage: true)
+            if self?.hasNextPage == true {
+                supplementaryView.startIndicator()
+            }
+        }
+    }
+}
+```
+    
+</div>
+</details>
+<br>
+    
+    
+### Cell 이미지를 할당
+- Cell이 reuse되기 때문에 비동기로 처리되는 image를 다운로드받아 할당되는 작업은 계속해서 수행되는 문제가 발생했습니다.
+- 단순히 indexPath에 해당하는 Cell이 지금 Cell과 같으면 할당되는 방법으로 해결하려고 했으나, 해당 방법은 문제는 해결되나 그 속도가 느린 문제가 발생했습니다.
+- DispatchWorkItem 및 Operation을 이용해서 reuse될때 cancel하는 방법 또한 위와 같은 문제가 발생했습니다.
+- 이러한 문제는 Image를 다운받는 URLSession이 이미 어려개 호출되어 발생하는 문제로 파악했고, Image를 다운받는 Task를 reuse될때마다 취소시켜 해당 문제를 해결했습니다.
+
+<details>
+<summary>코드 보기</summary>
+<div markdown="1">
+    
+```swift
+
+private mutating func fetchImage(_ urlString: String,
+                                     completion: @escaping (UIImage?) -> Void) {
+    guard let url: URL = URL(string: urlString) else {
+        completion(nil)
+        return
+    }
+        
+    fetchImageTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        if let data: Data = data,
+           let image: UIImage = UIImage(data: data) {
+            completion(image)
+        } else {
+                completion(nil)
+        }
+    }
+        
+    fetchImageTask?.resume()
+}
+
+mutating func cancelTask() {
+    fetchImageTask?.cancel()
+    fetchImageTask = nil
+}
+
+```
+    
+</div>
+</details>
+
+<br>
+
+### 키보드가 콘텐츠를 가리지 않도록 처리
+- 텍스트 입력 중 키보드가 콘텐츠를 가리지 않도록 키보드가 보이고 숨겨질 때 scrollView의 contentInset과 verticalScrollIndicatorInsets bottom을 키보드의 높이만큼 조절하도록 했습니다.
+
+![](https://i.imgur.com/5p9oEpC.gif)
+
+<details>
+<summary>코드 보기</summary>
+<div markdown="1">
+    
+```swift
+    @objc
+    private func keyboardWillShow(_ sender: Notification) {
+        guard let userinfo = sender.userInfo,
+              let keyboardFrame = userinfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
+        }
+        let keyboardHeight: CGFloat = keyboardFrame.size.height
+        scrollView.contentInset.bottom = keyboardHeight
+        scrollView.verticalScrollIndicatorInsets.bottom = keyboardHeight
+        
+        if let focusedTextView = UIResponder.currentFirstResponder as? UITextView {
+            scrollView.scrollRectToVisible(focusedTextView.frame, animated: false)
+        }
+    }
+```
+
+</div>
+</details>
+
+<br>
+
 
 ## 📚 참고 링크
 
