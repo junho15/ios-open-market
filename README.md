@@ -134,7 +134,7 @@ Mordern Collection View 활용하여 LIST와 GRID 형태로 상품 목록 화면
 
 |삭제|페이지 네이션|리스트 새로고침|
 |:---:|:---:|:---:|
-|<img src="https://i.imgur.com/ZYVHxt2.gif" width="200">|<img src="https://i.imgur.com/pfosfBm.gif" width="200">|<img src="https://i.imgur.com/RLavIBk.gif" width="200">|
+|<img src="https://user-images.githubusercontent.com/32012924/206642991-20f20c3a-5246-4e2a-a8fa-daab20b0d721.gif" width="200">|<img src="https://user-images.githubusercontent.com/32012924/206643025-9201cb0b-d603-476c-a16f-46ab365a0a99.gif" width="200">|<img src="https://i.imgur.com/RLavIBk.gif" width="200">|
 
 <br>
 
