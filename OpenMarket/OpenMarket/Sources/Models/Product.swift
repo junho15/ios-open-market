@@ -15,7 +15,7 @@ struct Product {
 }
 
 extension Product: Decodable {
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case id
         case vendorID = "vendor_id"
         case vendorName

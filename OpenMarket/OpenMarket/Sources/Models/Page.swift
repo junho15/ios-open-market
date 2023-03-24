@@ -11,7 +11,7 @@ struct Page {
 }
 
 extension Page: Decodable {
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case pageNumber = "pageNo"
         case productCountPerPage = "itemsPerPage"
         case totalProductCount = "totalCount"

@@ -16,7 +16,18 @@
 		EB5567FD29C1BA2700C1469D /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5567FC29C1BA2700C1469D /* Currency.swift */; };
 		EB5567FF29C1BA6B00C1469D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5567FE29C1BA6B00C1469D /* Product.swift */; };
 		EB55680129C1BDD300C1469D /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55680029C1BDD300C1469D /* Page.swift */; };
+		EB57E89129CD36BA002AEE7C /* JSONDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB57E89029CD36BA002AEE7C /* JSONDecodingTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EB57E89229CD36BA002AEE7C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C70FB0EF25BEF61C00C9924E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C70FB0F625BEF61C00C9924E;
+			remoteInfo = OpenMarket;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		C70FB0F725BEF61C00C9924E /* OpenMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -30,10 +41,19 @@
 		EB5567FC29C1BA2700C1469D /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		EB5567FE29C1BA6B00C1469D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		EB55680029C1BDD300C1469D /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
+		EB57E88E29CD36BA002AEE7C /* OpenMarketTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenMarketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB57E89029CD36BA002AEE7C /* JSONDecodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodingTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		C70FB0F425BEF61C00C9924E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB57E88B29CD36BA002AEE7C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -47,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				C70FB0F925BEF61C00C9924E /* OpenMarket */,
+				EB57E88F29CD36BA002AEE7C /* OpenMarketTests */,
 				C70FB0F825BEF61C00C9924E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -55,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				C70FB0F725BEF61C00C9924E /* OpenMarket.app */,
+				EB57E88E29CD36BA002AEE7C /* OpenMarketTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -124,6 +146,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		EB57E88F29CD36BA002AEE7C /* OpenMarketTests */ = {
+			isa = PBXGroup;
+			children = (
+				EB57E89029CD36BA002AEE7C /* JSONDecodingTests.swift */,
+			);
+			path = OpenMarketTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -145,17 +175,39 @@
 			productReference = C70FB0F725BEF61C00C9924E /* OpenMarket.app */;
 			productType = "com.apple.product-type.application";
 		};
+		EB57E88D29CD36BA002AEE7C /* OpenMarketTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EB57E89629CD36BA002AEE7C /* Build configuration list for PBXNativeTarget "OpenMarketTests" */;
+			buildPhases = (
+				EB57E88A29CD36BA002AEE7C /* Sources */,
+				EB57E88B29CD36BA002AEE7C /* Frameworks */,
+				EB57E88C29CD36BA002AEE7C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EB57E89329CD36BA002AEE7C /* PBXTargetDependency */,
+			);
+			name = OpenMarketTests;
+			productName = OpenMarketTests;
+			productReference = EB57E88E29CD36BA002AEE7C /* OpenMarketTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		C70FB0EF25BEF61C00C9924E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1230;
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1230;
 				TargetAttributes = {
 					C70FB0F625BEF61C00C9924E = {
 						CreatedOnToolsVersion = 12.3;
+					};
+					EB57E88D29CD36BA002AEE7C = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = C70FB0F625BEF61C00C9924E;
 					};
 				};
 			};
@@ -173,6 +225,7 @@
 			projectRoot = "";
 			targets = (
 				C70FB0F625BEF61C00C9924E /* OpenMarket */,
+				EB57E88D29CD36BA002AEE7C /* OpenMarketTests */,
 			);
 		};
 /* End PBXProject section */
@@ -185,6 +238,13 @@
 				C70FB10725BEF61D00C9924E /* LaunchScreen.storyboard in Resources */,
 				C70FB10425BEF61D00C9924E /* Assets.xcassets in Resources */,
 				C70FB10225BEF61C00C9924E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB57E88C29CD36BA002AEE7C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,7 +286,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EB57E88A29CD36BA002AEE7C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB57E89129CD36BA002AEE7C /* JSONDecodingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EB57E89329CD36BA002AEE7C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C70FB0F625BEF61C00C9924E /* OpenMarket */;
+			targetProxy = EB57E89229CD36BA002AEE7C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C70FB10025BEF61C00C9924E /* Main.storyboard */ = {
@@ -408,6 +484,44 @@
 			};
 			name = Release;
 		};
+		EB57E89429CD36BA002AEE7C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.OpenMarketTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenMarket.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OpenMarket";
+			};
+			name = Debug;
+		};
+		EB57E89529CD36BA002AEE7C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.OpenMarketTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenMarket.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OpenMarket";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -425,6 +539,15 @@
 			buildConfigurations = (
 				C70FB10C25BEF61D00C9924E /* Debug */,
 				C70FB10D25BEF61D00C9924E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EB57E89629CD36BA002AEE7C /* Build configuration list for PBXNativeTarget "OpenMarketTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EB57E89429CD36BA002AEE7C /* Debug */,
+				EB57E89529CD36BA002AEE7C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
