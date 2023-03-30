@@ -1,4 +1,4 @@
-struct Product {
+struct Product: Identifiable {
     let id: Int
     let vendorID: Int
     let vendorName: String

@@ -18,6 +18,8 @@
 		EB55680129C1BDD300C1469D /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55680029C1BDD300C1469D /* Page.swift */; };
 		EB57E89129CD36BA002AEE7C /* JSONDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB57E89029CD36BA002AEE7C /* JSONDecodingTests.swift */; };
 		EB75D63929D5C08C001B8719 /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB75D63829D5C08C001B8719 /* HttpMethod.swift */; };
+		EB75D63B29D5C0F8001B8719 /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB75D63A29D5C0F8001B8719 /* Requestable.swift */; };
+		EB75D63D29D5C4F7001B8719 /* OpenMarketRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB75D63C29D5C4F7001B8719 /* OpenMarketRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +47,8 @@
 		EB57E88E29CD36BA002AEE7C /* OpenMarketTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenMarketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB57E89029CD36BA002AEE7C /* JSONDecodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodingTests.swift; sourceTree = "<group>"; };
 		EB75D63829D5C08C001B8719 /* HttpMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethod.swift; sourceTree = "<group>"; };
+		EB75D63A29D5C0F8001B8719 /* Requestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requestable.swift; sourceTree = "<group>"; };
+		EB75D63C29D5C4F7001B8719 /* OpenMarketRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +173,8 @@
 			isa = PBXGroup;
 			children = (
 				EB75D63829D5C08C001B8719 /* HttpMethod.swift */,
+				EB75D63A29D5C0F8001B8719 /* Requestable.swift */,
+				EB75D63C29D5C4F7001B8719 /* OpenMarketRequest.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -297,11 +303,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB5567FD29C1BA2700C1469D /* Currency.swift in Sources */,
+				EB75D63B29D5C0F8001B8719 /* Requestable.swift in Sources */,
 				C70FB0FF25BEF61C00C9924E /* ViewController.swift in Sources */,
 				EB55680129C1BDD300C1469D /* Page.swift in Sources */,
 				EB75D63929D5C08C001B8719 /* HttpMethod.swift in Sources */,
 				EB5567FF29C1BA6B00C1469D /* Product.swift in Sources */,
 				C70FB0FB25BEF61C00C9924E /* AppDelegate.swift in Sources */,
+				EB75D63D29D5C4F7001B8719 /* OpenMarketRequest.swift in Sources */,
 				C70FB0FD25BEF61C00C9924E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
