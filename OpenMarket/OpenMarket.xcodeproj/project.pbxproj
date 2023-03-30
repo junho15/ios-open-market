@@ -17,6 +17,7 @@
 		EB5567FF29C1BA6B00C1469D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5567FE29C1BA6B00C1469D /* Product.swift */; };
 		EB55680129C1BDD300C1469D /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55680029C1BDD300C1469D /* Page.swift */; };
 		EB57E89129CD36BA002AEE7C /* JSONDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB57E89029CD36BA002AEE7C /* JSONDecodingTests.swift */; };
+		EB75D63929D5C08C001B8719 /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB75D63829D5C08C001B8719 /* HttpMethod.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 		EB55680029C1BDD300C1469D /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		EB57E88E29CD36BA002AEE7C /* OpenMarketTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenMarketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB57E89029CD36BA002AEE7C /* JSONDecodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodingTests.swift; sourceTree = "<group>"; };
+		EB75D63829D5C08C001B8719 /* HttpMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethod.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +168,7 @@
 		EB75D63729D5BFFC001B8719 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				EB75D63829D5C08C001B8719 /* HttpMethod.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				EB5567FD29C1BA2700C1469D /* Currency.swift in Sources */,
 				C70FB0FF25BEF61C00C9924E /* ViewController.swift in Sources */,
 				EB55680129C1BDD300C1469D /* Page.swift in Sources */,
+				EB75D63929D5C08C001B8719 /* HttpMethod.swift in Sources */,
 				EB5567FF29C1BA6B00C1469D /* Product.swift in Sources */,
 				C70FB0FB25BEF61C00C9924E /* AppDelegate.swift in Sources */,
 				C70FB0FD25BEF61C00C9924E /* SceneDelegate.swift in Sources */,
