@@ -132,9 +132,8 @@
 		EB5567FA29C1B58B00C1469D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EB5567FC29C1BA2700C1469D /* Currency.swift */,
-				EB5567FE29C1BA6B00C1469D /* Product.swift */,
-				EB55680029C1BDD300C1469D /* Page.swift */,
+				EB75D63629D5BFEB001B8719 /* DataModels */,
+				EB75D63729D5BFFC001B8719 /* Networking */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -152,6 +151,23 @@
 				EB57E89029CD36BA002AEE7C /* JSONDecodingTests.swift */,
 			);
 			path = OpenMarketTests;
+			sourceTree = "<group>";
+		};
+		EB75D63629D5BFEB001B8719 /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+				EB5567FC29C1BA2700C1469D /* Currency.swift */,
+				EB5567FE29C1BA6B00C1469D /* Product.swift */,
+				EB55680029C1BDD300C1469D /* Page.swift */,
+			);
+			path = DataModels;
+			sourceTree = "<group>";
+		};
+		EB75D63729D5BFFC001B8719 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
