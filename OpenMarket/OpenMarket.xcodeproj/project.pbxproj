@@ -20,6 +20,7 @@
 		EB75D63929D5C08C001B8719 /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB75D63829D5C08C001B8719 /* HttpMethod.swift */; };
 		EB75D63B29D5C0F8001B8719 /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB75D63A29D5C0F8001B8719 /* Requestable.swift */; };
 		EB75D63D29D5C4F7001B8719 /* OpenMarketRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB75D63C29D5C4F7001B8719 /* OpenMarketRequest.swift */; };
+		EBABE70729D67F2F008739B1 /* OpenMarketError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE70629D67F2F008739B1 /* OpenMarketError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		EB75D63829D5C08C001B8719 /* HttpMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethod.swift; sourceTree = "<group>"; };
 		EB75D63A29D5C0F8001B8719 /* Requestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requestable.swift; sourceTree = "<group>"; };
 		EB75D63C29D5C4F7001B8719 /* OpenMarketRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketRequest.swift; sourceTree = "<group>"; };
+		EBABE70629D67F2F008739B1 /* OpenMarketError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 		EB5567FA29C1B58B00C1469D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				EBABE70A29D6C91B008739B1 /* Error */,
 				EB75D63629D5BFEB001B8719 /* DataModels */,
 				EB75D63729D5BFFC001B8719 /* Networking */,
 			);
@@ -177,6 +180,14 @@
 				EB75D63C29D5C4F7001B8719 /* OpenMarketRequest.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		EBABE70A29D6C91B008739B1 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				EBABE70629D67F2F008739B1 /* OpenMarketError.swift */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,8 +235,9 @@
 		C70FB0EF25BEF61C00C9924E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1230;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					C70FB0F625BEF61C00C9924E = {
 						CreatedOnToolsVersion = 12.3;
@@ -310,6 +322,7 @@
 				EB5567FF29C1BA6B00C1469D /* Product.swift in Sources */,
 				C70FB0FB25BEF61C00C9924E /* AppDelegate.swift in Sources */,
 				EB75D63D29D5C4F7001B8719 /* OpenMarketRequest.swift in Sources */,
+				EBABE70729D67F2F008739B1 /* OpenMarketError.swift in Sources */,
 				C70FB0FD25BEF61C00C9924E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
