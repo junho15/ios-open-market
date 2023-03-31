@@ -24,7 +24,9 @@
 		EBABE70E29D6CB95008739B1 /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE70D29D6CB95008739B1 /* URLSessionProtocol.swift */; };
 		EBABE71029D6CBB0008739B1 /* OpenMarketAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE70F29D6CBB0008739B1 /* OpenMarketAPIClient.swift */; };
 		EBABE71229D6D2AC008739B1 /* JSONDecoder+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE71129D6D2AC008739B1 /* JSONDecoder+Extensions.swift */; };
+		EBABE71429D6F05F008739B1 /* OpenMarketAPIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE71329D6F05F008739B1 /* OpenMarketAPIClientTests.swift */; };
 		EBABE71629D6F203008739B1 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE71529D6F203008739B1 /* TestData.swift */; };
+		EBABE71829D6F3E2008739B1 /* StubURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE71729D6F3E2008739B1 /* StubURLSession.swift */; };
 		EBABE71A29D70C2C008739B1 /* ProductImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE71929D70C2C008739B1 /* ProductImage.swift */; };
 		EBABE71C29D70C5C008739B1 /* ProductVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE71B29D70C5C008739B1 /* ProductVendor.swift */; };
 /* End PBXBuildFile section */
@@ -60,7 +62,9 @@
 		EBABE70D29D6CB95008739B1 /* URLSessionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
 		EBABE70F29D6CBB0008739B1 /* OpenMarketAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenMarketAPIClient.swift; sourceTree = "<group>"; };
 		EBABE71129D6D2AC008739B1 /* JSONDecoder+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Extensions.swift"; sourceTree = "<group>"; };
+		EBABE71329D6F05F008739B1 /* OpenMarketAPIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketAPIClientTests.swift; sourceTree = "<group>"; };
 		EBABE71529D6F203008739B1 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		EBABE71729D6F3E2008739B1 /* StubURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubURLSession.swift; sourceTree = "<group>"; };
 		EBABE71929D70C2C008739B1 /* ProductImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductImage.swift; sourceTree = "<group>"; };
 		EBABE71B29D70C5C008739B1 /* ProductVendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductVendor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -169,8 +173,10 @@
 		EB57E88F29CD36BA002AEE7C /* OpenMarketTests */ = {
 			isa = PBXGroup;
 			children = (
-				EB57E89029CD36BA002AEE7C /* JSONDecodingTests.swift */,
 				EBABE71529D6F203008739B1 /* TestData.swift */,
+				EBABE71729D6F3E2008739B1 /* StubURLSession.swift */,
+				EB57E89029CD36BA002AEE7C /* JSONDecodingTests.swift */,
+				EBABE71329D6F05F008739B1 /* OpenMarketAPIClientTests.swift */,
 			);
 			path = OpenMarketTests;
 			sourceTree = "<group>";
@@ -354,8 +360,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBABE71829D6F3E2008739B1 /* StubURLSession.swift in Sources */,
 				EBABE71629D6F203008739B1 /* TestData.swift in Sources */,
 				EB57E89129CD36BA002AEE7C /* JSONDecodingTests.swift in Sources */,
+				EBABE71429D6F05F008739B1 /* OpenMarketAPIClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,7 +565,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.OpenMarketTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -576,7 +584,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.OpenMarketTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
