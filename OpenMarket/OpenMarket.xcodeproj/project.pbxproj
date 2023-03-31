@@ -25,6 +25,8 @@
 		EBABE71029D6CBB0008739B1 /* OpenMarketAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE70F29D6CBB0008739B1 /* OpenMarketAPIClient.swift */; };
 		EBABE71229D6D2AC008739B1 /* JSONDecoder+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE71129D6D2AC008739B1 /* JSONDecoder+Extensions.swift */; };
 		EBABE71629D6F203008739B1 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE71529D6F203008739B1 /* TestData.swift */; };
+		EBABE71A29D70C2C008739B1 /* ProductImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE71929D70C2C008739B1 /* ProductImage.swift */; };
+		EBABE71C29D70C5C008739B1 /* ProductVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE71B29D70C5C008739B1 /* ProductVendor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		EBABE70F29D6CBB0008739B1 /* OpenMarketAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenMarketAPIClient.swift; sourceTree = "<group>"; };
 		EBABE71129D6D2AC008739B1 /* JSONDecoder+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Extensions.swift"; sourceTree = "<group>"; };
 		EBABE71529D6F203008739B1 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		EBABE71929D70C2C008739B1 /* ProductImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductImage.swift; sourceTree = "<group>"; };
+		EBABE71B29D70C5C008739B1 /* ProductVendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductVendor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +180,8 @@
 			children = (
 				EB5567FC29C1BA2700C1469D /* Currency.swift */,
 				EB5567FE29C1BA6B00C1469D /* Product.swift */,
+				EBABE71929D70C2C008739B1 /* ProductImage.swift */,
+				EBABE71B29D70C5C008739B1 /* ProductVendor.swift */,
 				EB55680029C1BDD300C1469D /* Page.swift */,
 			);
 			path = DataModels;
@@ -328,6 +334,7 @@
 			files = (
 				EB5567FD29C1BA2700C1469D /* Currency.swift in Sources */,
 				EB75D63B29D5C0F8001B8719 /* Requestable.swift in Sources */,
+				EBABE71C29D70C5C008739B1 /* ProductVendor.swift in Sources */,
 				C70FB0FF25BEF61C00C9924E /* ViewController.swift in Sources */,
 				EB55680129C1BDD300C1469D /* Page.swift in Sources */,
 				EB75D63929D5C08C001B8719 /* HttpMethod.swift in Sources */,
@@ -339,6 +346,7 @@
 				EBABE70729D67F2F008739B1 /* OpenMarketError.swift in Sources */,
 				EBABE71229D6D2AC008739B1 /* JSONDecoder+Extensions.swift in Sources */,
 				C70FB0FD25BEF61C00C9924E /* SceneDelegate.swift in Sources */,
+				EBABE71A29D70C2C008739B1 /* ProductImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

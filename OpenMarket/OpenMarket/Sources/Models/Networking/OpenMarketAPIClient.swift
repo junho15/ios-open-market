@@ -36,12 +36,12 @@ final class OpenMarketAPIClient {
         }
     }
 
-    func fetchProductDetail(productID: Product.ID, completion: @escaping (Result<[Product], Error>) -> Void) {
+    func fetchProductDetail(productID: Product.ID, completion: @escaping (Result<Product, Error>) -> Void) {
         let fetchProductDetailRequest = OpenMarketRequest.fetchProductDetail(productID: productID)
         session.execute(request: fetchProductDetailRequest) { result in
             switch result {
             case .success(let data):
-                switch JSONDecoder().decode(data, to: [Product].self) {
+                switch JSONDecoder().decode(data, to: Product.self) {
                 case .success(let products):
                     completion(.success(products))
                 case .failure(let error):
