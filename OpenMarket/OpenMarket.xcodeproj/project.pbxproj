@@ -21,6 +21,7 @@
 		EB75D63B29D5C0F8001B8719 /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB75D63A29D5C0F8001B8719 /* Requestable.swift */; };
 		EB75D63D29D5C4F7001B8719 /* OpenMarketRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB75D63C29D5C4F7001B8719 /* OpenMarketRequest.swift */; };
 		EBABE70729D67F2F008739B1 /* OpenMarketError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE70629D67F2F008739B1 /* OpenMarketError.swift */; };
+		EBABE70E29D6CB95008739B1 /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABE70D29D6CB95008739B1 /* URLSessionProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		EB75D63A29D5C0F8001B8719 /* Requestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requestable.swift; sourceTree = "<group>"; };
 		EB75D63C29D5C4F7001B8719 /* OpenMarketRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketRequest.swift; sourceTree = "<group>"; };
 		EBABE70629D67F2F008739B1 /* OpenMarketError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketError.swift; sourceTree = "<group>"; };
+		EBABE70D29D6CB95008739B1 /* URLSessionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +180,7 @@
 				EB75D63829D5C08C001B8719 /* HttpMethod.swift */,
 				EB75D63A29D5C0F8001B8719 /* Requestable.swift */,
 				EB75D63C29D5C4F7001B8719 /* OpenMarketRequest.swift */,
+				EBABE70D29D6CB95008739B1 /* URLSessionProtocol.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				C70FB0FF25BEF61C00C9924E /* ViewController.swift in Sources */,
 				EB55680129C1BDD300C1469D /* Page.swift in Sources */,
 				EB75D63929D5C08C001B8719 /* HttpMethod.swift in Sources */,
+				EBABE70E29D6CB95008739B1 /* URLSessionProtocol.swift in Sources */,
 				EB5567FF29C1BA6B00C1469D /* Product.swift in Sources */,
 				C70FB0FB25BEF61C00C9924E /* AppDelegate.swift in Sources */,
 				EB75D63D29D5C4F7001B8719 /* OpenMarketRequest.swift in Sources */,
