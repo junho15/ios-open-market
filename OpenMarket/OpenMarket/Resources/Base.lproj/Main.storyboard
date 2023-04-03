@@ -33,6 +33,9 @@
                                 <segment title="LIST"/>
                                 <segment title="GRID"/>
                             </segments>
+                            <connections>
+                                <action selector="segmentedControlValueChanged:" destination="s9y-uv-pMx" eventType="valueChanged" id="dDQ-QO-nP3"/>
+                            </connections>
                         </segmentedControl>
                     </navigationItem>
                     <connections>
