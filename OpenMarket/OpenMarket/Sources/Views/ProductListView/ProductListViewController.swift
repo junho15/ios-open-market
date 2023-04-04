@@ -69,11 +69,14 @@ extension ProductListViewController {
     private func listCellRegistrationHandler(cell: UICollectionViewListCell,
                                              indexPath: IndexPath,
                                              itemIdentifier: Product.ID) {
+        guard let product = product(for: itemIdentifier) else { fatalError("Error: Not found") }
         var contentConfiguration = cell.defaultContentConfiguration()
-        guard let product = product(for: itemIdentifier) else { fatalError() }
         contentConfiguration.text = product.name
         contentConfiguration.textProperties.font = UIFont.preferredFont(forTextStyle: .body)
-        contentConfiguration.secondaryText = "\(product.currency) \(product.price) \(product.bargainPrice)"
+        let priceAttributedText = ProductAttributedStringMaker.oneLinePrice(currency: product.currency,
+                                                             price: product.price,
+                                                             bargainPrice: product.bargainPrice).attributedString
+        contentConfiguration.secondaryAttributedText = priceAttributedText
         contentConfiguration.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .caption2)
         cell.contentConfiguration = contentConfiguration
 

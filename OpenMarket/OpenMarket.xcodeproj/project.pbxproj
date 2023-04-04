@@ -12,6 +12,8 @@
 		C70FB10225BEF61C00C9924E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C70FB10025BEF61C00C9924E /* Main.storyboard */; };
 		C70FB10425BEF61D00C9924E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C70FB10325BEF61D00C9924E /* Assets.xcassets */; };
 		C70FB10725BEF61D00C9924E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C70FB10525BEF61D00C9924E /* LaunchScreen.storyboard */; };
+		EB2E5C7C29DC4AB200A036A9 /* ProductAttributedStringMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2E5C7B29DC4AB200A036A9 /* ProductAttributedStringMaker.swift */; };
+		EB2E5C7E29DC4AF100A036A9 /* NumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2E5C7D29DC4AF100A036A9 /* NumberFormatter.swift */; };
 		EB30080A29DAAE6E00523975 /* ProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB30080929DAAE6E00523975 /* ProductListViewController.swift */; };
 		EB5567FD29C1BA2700C1469D /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5567FC29C1BA2700C1469D /* Currency.swift */; };
 		EB5567FF29C1BA6B00C1469D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5567FE29C1BA6B00C1469D /* Product.swift */; };
@@ -51,6 +53,8 @@
 		C70FB10325BEF61D00C9924E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C70FB10625BEF61D00C9924E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C70FB10825BEF61D00C9924E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EB2E5C7B29DC4AB200A036A9 /* ProductAttributedStringMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductAttributedStringMaker.swift; sourceTree = "<group>"; };
+		EB2E5C7D29DC4AF100A036A9 /* NumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatter.swift; sourceTree = "<group>"; };
 		EB30080929DAAE6E00523975 /* ProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewController.swift; sourceTree = "<group>"; };
 		EB5567FC29C1BA2700C1469D /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		EB5567FE29C1BA6B00C1469D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				EBABE71129D6D2AC008739B1 /* JSONDecoder.swift */,
+				EB2E5C7D29DC4AF100A036A9 /* NumberFormatter.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -129,6 +134,7 @@
 		EB2E5C7A29DC1AB300A036A9 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				EB2E5C7B29DC4AB200A036A9 /* ProductAttributedStringMaker.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -363,6 +369,7 @@
 				EB5567FD29C1BA2700C1469D /* Currency.swift in Sources */,
 				EB75D63B29D5C0F8001B8719 /* Requestable.swift in Sources */,
 				EBABE71C29D70C5C008739B1 /* ProductVendor.swift in Sources */,
+				EB2E5C7E29DC4AF100A036A9 /* NumberFormatter.swift in Sources */,
 				EB55680129C1BDD300C1469D /* Page.swift in Sources */,
 				EB75D63929D5C08C001B8719 /* HttpMethod.swift in Sources */,
 				EBABE70E29D6CB95008739B1 /* URLSessionProtocol.swift in Sources */,
@@ -375,6 +382,7 @@
 				EBABE70729D67F2F008739B1 /* OpenMarketError.swift in Sources */,
 				EBDC9A4329DAEE65007AD736 /* ProductListViewController+LayoutStyle.swift in Sources */,
 				EBABE71229D6D2AC008739B1 /* JSONDecoder.swift in Sources */,
+				EB2E5C7C29DC4AB200A036A9 /* ProductAttributedStringMaker.swift in Sources */,
 				C70FB0FD25BEF61C00C9924E /* SceneDelegate.swift in Sources */,
 				EBABE71A29D70C2C008739B1 /* ProductImage.swift in Sources */,
 			);
