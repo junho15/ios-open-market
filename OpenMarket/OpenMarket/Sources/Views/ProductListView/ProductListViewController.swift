@@ -80,7 +80,8 @@ extension ProductListViewController {
         contentConfiguration.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .caption2)
         cell.contentConfiguration = contentConfiguration
 
-        cell.accessories = [.disclosureIndicator(displayed: .always)]
+        let stockCellAccessory = ProductCellAccessoryMaker.stockLabel(stock: product.stock).cellAccessory
+        cell.accessories = [stockCellAccessory, .disclosureIndicator(displayed: .always)]
     }
 
     private func gridCellRegistrationHandler(cell: UICollectionViewCell,
