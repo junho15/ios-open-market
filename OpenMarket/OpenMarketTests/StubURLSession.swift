@@ -1,11 +1,11 @@
 import Foundation
 @testable import OpenMarket
 
-final class StubURLSession: URLSessionProtocol {
+class StubURLSession: URLSessionProtocol {
     var data: Data?
     var error: Error?
     var response: URLResponse?
-    var delay: TimeInterval = 0.0
+    var delay: TimeInterval = 0.5
 
     func execute(request: OpenMarket.Requestable, completion: @escaping (Result<Data, Error>) -> Void) {
         guard request.urlRequest != nil else {

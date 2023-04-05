@@ -13,9 +13,9 @@ final class OpenMarketAPIClientTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        try super.tearDownWithError()
         sut = nil
         stubURLSession = nil
+        try super.tearDownWithError()
     }
 
     func test_checkHealth_호출시_서버에서_200코드를보내면_sucess를_반환하는지() {
