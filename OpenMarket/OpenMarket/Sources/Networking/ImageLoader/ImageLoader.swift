@@ -5,6 +5,7 @@ final class ImageLoader: ImageLoadable {
 
     private let session: URLSessionProtocol
     private let imageCache: ImageCacheable
+    private let runningTasksQueue = DispatchQueue(label: "runningTasks")
     private var runningTasks = [URL: [Callback]]()
 
     init(session: URLSessionProtocol = URLSession.shared, imageCache: ImageCacheable = ImageCache.shared) {
@@ -20,21 +21,24 @@ final class ImageLoader: ImageLoadable {
             return
         }
 
-        if runningTasks[url] != nil {
-            runningTasks[url]?.append(completion)
-            return
-        } else {
-            runningTasks[url] = [completion]
+        var existsRunningTasks = true
+        runningTasksQueue.sync {
+            existsRunningTasks = runningTasks[url] != nil
+            if existsRunningTasks {
+                runningTasks[url]?.append(completion)
+            } else {
+                runningTasks[url] = [completion]
+            }
         }
+        guard existsRunningTasks == false else { return }
 
         session.execute(url: url) { [weak self] result in
             guard let self else { return }
-
-            defer {
+            var callbacks = [Callback]()
+            self.runningTasksQueue.sync {
+                callbacks = self.runningTasks[url] ?? []
                 self.runningTasks[url] = nil
             }
-
-            let callbacks = self.runningTasks[url] ?? []
 
             switch result {
             case .success(let data):
