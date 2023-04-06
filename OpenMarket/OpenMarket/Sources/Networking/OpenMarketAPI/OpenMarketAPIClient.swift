@@ -12,9 +12,13 @@ final class OpenMarketAPIClient {
         session.execute(request: checkHealthRequest) { result in
             switch result {
             case .success:
-                completion(.success(()))
+                DispatchQueue.main.async {
+                    completion(.success(()))
+                }
             case .failure(let error):
-                completion(.failure(error))
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
             }
         }
     }
@@ -26,12 +30,18 @@ final class OpenMarketAPIClient {
             case .success(let data):
                 switch JSONDecoder().decode(data, to: Page.self) {
                 case .success(let page):
-                    completion(.success(page))
+                    DispatchQueue.main.async {
+                        completion(.success(page))
+                    }
                 case .failure(let error):
-                    completion(.failure(error))
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
                 }
             case .failure(let error):
-                completion(.failure(error))
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
             }
         }
     }
@@ -43,12 +53,18 @@ final class OpenMarketAPIClient {
             case .success(let data):
                 switch JSONDecoder().decode(data, to: Product.self) {
                 case .success(let products):
-                    completion(.success(products))
+                    DispatchQueue.main.async {
+                        completion(.success(products))
+                    }
                 case .failure(let error):
-                    completion(.failure(error))
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
                 }
             case .failure(let error):
-                completion(.failure(error))
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
             }
         }
     }
