@@ -11,6 +11,7 @@ final class ProductListViewController: UICollectionViewController {
     private var layoutStyle = LayoutStyle.list {
         didSet {
             configureCollectionViewLayoutStyle(layoutStyle)
+            updateSnapshot(reloading: products.map { $0.id }, animatingDifferences: false)
         }
     }
 
@@ -53,6 +54,7 @@ extension ProductListViewController {
         let layout = layoutStyle.layout
         collectionView.collectionViewLayout = layout
         collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.reloadData()
     }
 
     private func configureDataSource() {
@@ -82,7 +84,7 @@ extension ProductListViewController {
     private func listCellRegistrationHandler(cell: UICollectionViewListCell,
                                              indexPath: IndexPath,
                                              itemIdentifier: Product.ID) {
-        guard let product = product(for: itemIdentifier) else { fatalError("Error: Not found") }
+        guard let product = product(for: itemIdentifier) else { fatalError("Error: Not found Product") }
         var contentConfiguration = cell.defaultContentConfiguration()
         contentConfiguration.text = product.name
         contentConfiguration.textProperties.font = UIFont.preferredFont(forTextStyle: .body)
@@ -91,6 +93,7 @@ extension ProductListViewController {
                                                              bargainPrice: product.bargainPrice).attributedString
         contentConfiguration.secondaryAttributedText = priceAttributedText
         contentConfiguration.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .caption2)
+
         let placeholderImage = UIImage(systemName: "photo")
         contentConfiguration.image = placeholderImage
         contentConfiguration.imageProperties.maximumSize = CGSize(width: 100, height: 100)
@@ -109,6 +112,7 @@ extension ProductListViewController {
                 }
             }
         }
+
         cell.contentConfiguration = contentConfiguration
 
         let stockCellAccessory = ProductCellAccessoryMaker.stockLabel(stock: product.stock).cellAccessory
@@ -118,16 +122,42 @@ extension ProductListViewController {
     private func gridCellRegistrationHandler(cell: UICollectionViewCell,
                                              indexPath: IndexPath,
                                              itemIdentifier: Product.ID) {
+        guard let product = product(for: itemIdentifier) else { fatalError("Error: Not found Product") }
+        var contentConfiguration = cell.productGridConfiguration()
+        contentConfiguration.name = product.name
+        contentConfiguration.currency = product.currency
+        contentConfiguration.price = product.price
+        contentConfiguration.bargainPrice = product.bargainPrice
+        contentConfiguration.stock = product.stock
+
+        let placeholderImage = UIImage(systemName: "photo")
+        contentConfiguration.thumbnailImage = placeholderImage
+        if let url = URL(string: product.thumbnailURL) {
+            imageLoader.loadImage(from: url) { [weak self] result in
+                guard let self else { return }
+                switch result {
+                case .success(let image):
+                    if collectionView.indexPath(for: cell) == indexPath {
+                        contentConfiguration.thumbnailImage = image
+                        cell.contentConfiguration = contentConfiguration
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+
+        cell.contentConfiguration = contentConfiguration
     }
 
-    private func updateSnapshot(reloading changedProductIDs: [Product.ID] = []) {
+    private func updateSnapshot(reloading changedProductIDs: [Product.ID] = [], animatingDifferences: Bool = true) {
         var snapshot = Snapshot()
         snapshot.appendSections([ProductListSection.main])
         snapshot.appendItems(products.map { $0.id })
         if changedProductIDs.isEmpty == false {
             snapshot.reloadItems(changedProductIDs)
         }
-        dataSource.apply(snapshot)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
 
     private func product(for id: Product.ID) -> Product? {

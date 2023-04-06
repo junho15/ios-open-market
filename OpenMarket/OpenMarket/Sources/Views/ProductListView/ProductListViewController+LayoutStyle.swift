@@ -20,7 +20,7 @@ extension ProductListViewController {
         }
 
         private var gridLayout: UICollectionViewCompositionalLayout {
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
                                                   heightDimension: .estimated(100))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
