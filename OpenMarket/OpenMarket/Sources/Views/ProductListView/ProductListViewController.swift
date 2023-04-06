@@ -4,6 +4,8 @@ final class ProductListViewController: UICollectionViewController {
 
     // MARK: Properties
 
+    private let openMarketAPIClient = OpenMarketAPIClient()
+    private let imageLoader = ImageLoader()
     private var dataSource: DataSource!
     private var products = [Product]()
     private var layoutStyle = LayoutStyle.list {
@@ -23,6 +25,17 @@ final class ProductListViewController: UICollectionViewController {
 
         configureCollectionViewLayoutStyle(layoutStyle)
         configureDataSource()
+
+        openMarketAPIClient.fetchPage(pageNumber: 3, productsPerPage: 100) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let page):
+                products = page.products
+                updateSnapshot()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 
     // MARK: IBActions
@@ -43,15 +56,15 @@ extension ProductListViewController {
     }
 
     private func configureDataSource() {
+        let listCellRegistration = UICollectionView.CellRegistration(handler: self.listCellRegistrationHandler)
+        let gridCellRegistration = UICollectionView.CellRegistration(handler: self.gridCellRegistrationHandler)
         dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
             switch self.layoutStyle {
             case .list:
-                let listCellRegistration = UICollectionView.CellRegistration(handler: self.listCellRegistrationHandler)
                 return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration,
                                                                     for: indexPath,
                                                                     item: itemIdentifier)
             case .grid:
-                let gridCellRegistration = UICollectionView.CellRegistration(handler: self.gridCellRegistrationHandler)
                 return collectionView.dequeueConfiguredReusableCell(using: gridCellRegistration,
                                                                     for: indexPath,
                                                                     item: itemIdentifier)
@@ -78,6 +91,24 @@ extension ProductListViewController {
                                                              bargainPrice: product.bargainPrice).attributedString
         contentConfiguration.secondaryAttributedText = priceAttributedText
         contentConfiguration.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .caption2)
+        let placeholderImage = UIImage(systemName: "photo")
+        contentConfiguration.image = placeholderImage
+        contentConfiguration.imageProperties.maximumSize = CGSize(width: 100, height: 100)
+        contentConfiguration.imageProperties.reservedLayoutSize = CGSize(width: 100, height: 100)
+        if let url = URL(string: product.thumbnailURL) {
+            imageLoader.loadImage(from: url) { [weak self] result in
+                guard let self else { return }
+                switch result {
+                case .success(let image):
+                    if collectionView.indexPath(for: cell) == indexPath {
+                        contentConfiguration.image = image
+                        cell.contentConfiguration = contentConfiguration
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
         cell.contentConfiguration = contentConfiguration
 
         let stockCellAccessory = ProductCellAccessoryMaker.stockLabel(stock: product.stock).cellAccessory
@@ -87,6 +118,16 @@ extension ProductListViewController {
     private func gridCellRegistrationHandler(cell: UICollectionViewCell,
                                              indexPath: IndexPath,
                                              itemIdentifier: Product.ID) {
+    }
+
+    private func updateSnapshot(reloading changedProductIDs: [Product.ID] = []) {
+        var snapshot = Snapshot()
+        snapshot.appendSections([ProductListSection.main])
+        snapshot.appendItems(products.map { $0.id })
+        if changedProductIDs.isEmpty == false {
+            snapshot.reloadItems(changedProductIDs)
+        }
+        dataSource.apply(snapshot)
     }
 
     private func product(for id: Product.ID) -> Product? {
