@@ -15,7 +15,7 @@ final class ProductGridContentView: UIView, UIContentView {
     init(_ configuration: UIContentConfiguration) {
         self.configuration = configuration
         super.init(frame: .zero)
-        configureHierarchy()
+        configureSubviews()
     }
 
     required init?(coder: NSCoder) {
@@ -34,7 +34,7 @@ final class ProductGridContentView: UIView, UIContentView {
         stockLabel.attributedText = ProductAttributedStringMaker.stock(stock: configuration.stock).attributedString
     }
 
-    private func configureHierarchy() {
+    private func configureSubviews() {
         thumbnailImageView.contentMode = .scaleToFill
         nameLabel.font = .preferredFont(forTextStyle: .body)
         nameLabel.adjustsFontForContentSizeCategory = true

@@ -1,8 +1,17 @@
 import UIKit
 
 extension ProductListViewController {
-    enum LayoutStyle: Int {
+    enum LayoutStyle: Int, CaseIterable {
         case list, grid
+
+        var localizedString: String {
+            switch self {
+            case .list:
+                return NSLocalizedString("LIST", comment: "SegmentedControl List Text")
+            case .grid:
+                return NSLocalizedString("GRID", comment: "SegmentedControl Grid Text")
+            }
+        }
 
         var layout: UICollectionViewCompositionalLayout {
             switch self {

@@ -8,11 +8,17 @@ final class ProductListViewController: UICollectionViewController {
     private let imageLoader = ImageLoader()
     private var dataSource: DataSource!
     private var products = [Product]()
+    private var nextPageNumber = 1
+    private var hasNextPage = true
+    private var isLoadingNewProducts = false
     private var layoutStyle = LayoutStyle.list {
         didSet {
             configureCollectionViewLayoutStyle(layoutStyle)
-            updateSnapshot(reloading: products.map { $0.id }, animatingDifferences: false)
+            updateSnapshot(reloading: productIDs, animatingDifferences: false)
         }
+    }
+    private var productIDs: [Product.ID] {
+        products.map { $0.id }
     }
 
     // MARK: IBOutlets
@@ -24,22 +30,13 @@ final class ProductListViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         configureCollectionViewLayoutStyle(layoutStyle)
         configureDataSource()
-
-        activityIndicatorView.startAnimating()
-        openMarketAPIClient.fetchPage(pageNumber: 3, productsPerPage: 100) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let page):
-                products = page.products
-                updateSnapshot()
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-            activityIndicatorView.stopAnimating()
-        }
+        configureSegmentedControl()
+        clearProducts()
+        loadProducts(pageNumber: nextPageNumber,
+                     productsPerPage: Constants.productsPerPage,
+                     withActivityIndicator: true)
     }
 
     // MARK: IBActions
@@ -76,6 +73,40 @@ extension ProductListViewController {
             }
         }
     }
+
+    private func configureSegmentedControl() {
+        LayoutStyle.allCases.forEach { layoutStyle in
+            segmentedControl.setTitle(layoutStyle.localizedString, forSegmentAt: layoutStyle.rawValue)
+        }
+    }
+
+    private func clearProducts() {
+        products.removeAll()
+        nextPageNumber = 1
+        hasNextPage = true
+    }
+
+    private func loadProducts(pageNumber: Int, productsPerPage: Int, withActivityIndicator: Bool = false) {
+        if withActivityIndicator {
+            activityIndicatorView.startAnimating()
+        }
+
+        openMarketAPIClient.fetchPage(pageNumber: pageNumber,
+                                      productsPerPage: productsPerPage) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let page):
+                nextPageNumber = pageNumber + 1
+                hasNextPage = page.hasNextPage
+                let updatedProductIDs = updateOrInsertProducts(page.products).updated
+                updateSnapshot(reloading: updatedProductIDs)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            activityIndicatorView.stopAnimating()
+            isLoadingNewProducts = false
+        }
+    }
 }
 
 // MARK: - DataSource
@@ -97,8 +128,7 @@ extension ProductListViewController {
         contentConfiguration.secondaryAttributedText = priceAttributedText
         contentConfiguration.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .caption2)
 
-        let placeholderImage = UIImage(systemName: "photo")
-        contentConfiguration.image = placeholderImage
+        contentConfiguration.image = Constants.placeholderImage
         contentConfiguration.imageProperties.maximumSize = CGSize(width: 100, height: 100)
         contentConfiguration.imageProperties.reservedLayoutSize = CGSize(width: 100, height: 100)
         if let url = URL(string: product.thumbnailURL) {
@@ -133,8 +163,7 @@ extension ProductListViewController {
         contentConfiguration.bargainPrice = product.bargainPrice
         contentConfiguration.stock = product.stock
 
-        let placeholderImage = UIImage(systemName: "photo")
-        contentConfiguration.thumbnailImage = placeholderImage
+        contentConfiguration.thumbnailImage = Constants.placeholderImage
         if let url = URL(string: product.thumbnailURL) {
             imageLoader.loadImage(from: url) { [weak self] result in
                 guard let self else { return }
@@ -156,7 +185,7 @@ extension ProductListViewController {
     private func updateSnapshot(reloading changedProductIDs: [Product.ID] = [], animatingDifferences: Bool = true) {
         var snapshot = Snapshot()
         snapshot.appendSections([ProductListSection.main])
-        snapshot.appendItems(products.map { $0.id })
+        snapshot.appendItems(productIDs)
         if changedProductIDs.isEmpty == false {
             snapshot.reloadItems(changedProductIDs)
         }
@@ -165,5 +194,45 @@ extension ProductListViewController {
 
     private func product(for id: Product.ID) -> Product? {
         return products.first(where: { $0.id == id })
+    }
+
+    @discardableResult
+    private func updateOrInsertProducts(_ newProducts: [Product]) -> (updated: [Product.ID],
+                                                                      inserted: [Product.ID]) {
+        var updatedProductIDs = [Product.ID]()
+        var insertedProductIDs = [Product.ID]()
+        newProducts.forEach { product in
+            if let index = products.firstIndex(where: { $0.id == product.id }) {
+                products[index] = product
+                updatedProductIDs.append(product.id)
+            } else {
+                products.append(product)
+                insertedProductIDs.append(product.id)
+            }
+        }
+        return (updatedProductIDs, insertedProductIDs)
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension ProductListViewController {
+    override func collectionView(_ collectionView: UICollectionView,
+                                 willDisplay cell: UICollectionViewCell,
+                                 forItemAt indexPath: IndexPath) {
+        if indexPath.row == products.count - 1,
+           isLoadingNewProducts == false {
+            isLoadingNewProducts = true
+            loadProducts(pageNumber: nextPageNumber, productsPerPage: Constants.productsPerPage)
+        }
+    }
+}
+
+// MARK: - Constants
+
+extension ProductListViewController {
+    private enum Constants {
+        static let productsPerPage = 50
+        static let placeholderImage = UIImage(systemName: "photo")
     }
 }
