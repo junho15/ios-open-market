@@ -30,8 +30,7 @@ final class ProductListViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureCollectionViewLayoutStyle(layoutStyle)
-        configureDataSource()
+        configureCollectionView()
         configureSegmentedControl()
         clearProducts()
         loadProducts(pageNumber: nextPageNumber,
@@ -50,6 +49,12 @@ final class ProductListViewController: UICollectionViewController {
 // MARK: - Methods
 
 extension ProductListViewController {
+    private func configureCollectionView() {
+        configureCollectionViewLayoutStyle(layoutStyle)
+        configureDataSource()
+        configureRefreshControl()
+    }
+
     private func configureCollectionViewLayoutStyle(_ layoutStyle: LayoutStyle) {
         let layout = layoutStyle.layout
         collectionView.collectionViewLayout = layout
@@ -74,6 +79,15 @@ extension ProductListViewController {
         }
     }
 
+    private func configureRefreshControl() {
+        collectionView.refreshControl = UIRefreshControl()
+        collectionView.refreshControl?.addAction(UIAction(handler: { [weak self] _ in
+            guard let self else { return }
+            clearProducts()
+            loadProducts(pageNumber: nextPageNumber, productsPerPage: Constants.productsPerPage)
+        }), for: .valueChanged)
+    }
+
     private func configureSegmentedControl() {
         LayoutStyle.allCases.forEach { layoutStyle in
             segmentedControl.setTitle(layoutStyle.localizedString, forSegmentAt: layoutStyle.rawValue)
@@ -87,6 +101,7 @@ extension ProductListViewController {
     }
 
     private func loadProducts(pageNumber: Int, productsPerPage: Int, withActivityIndicator: Bool = false) {
+        guard hasNextPage else { return }
         if withActivityIndicator {
             activityIndicatorView.startAnimating()
         }
@@ -104,6 +119,7 @@ extension ProductListViewController {
                 print(error.localizedDescription)
             }
             activityIndicatorView.stopAnimating()
+            collectionView.refreshControl?.endRefreshing()
             isLoadingNewProducts = false
         }
     }
