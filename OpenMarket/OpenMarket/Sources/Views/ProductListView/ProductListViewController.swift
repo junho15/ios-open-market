@@ -18,6 +18,7 @@ final class ProductListViewController: UICollectionViewController {
     // MARK: IBOutlets
 
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
 
     // MARK: View Lifecycle
 
@@ -27,6 +28,7 @@ final class ProductListViewController: UICollectionViewController {
         configureCollectionViewLayoutStyle(layoutStyle)
         configureDataSource()
 
+        activityIndicatorView.startAnimating()
         openMarketAPIClient.fetchPage(pageNumber: 3, productsPerPage: 100) { [weak self] result in
             guard let self else { return }
             switch result {
@@ -36,6 +38,7 @@ final class ProductListViewController: UICollectionViewController {
             case .failure(let error):
                 print(error.localizedDescription)
             }
+            activityIndicatorView.stopAnimating()
         }
     }
 

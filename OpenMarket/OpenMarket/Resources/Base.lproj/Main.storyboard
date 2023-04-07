@@ -22,6 +22,10 @@
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
+                        <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" id="l5M-od-kqA">
+                            <rect key="frame" x="0.0" y="-103" width="393" height="852"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
                         <cells/>
                     </collectionView>
                     <navigationItem key="navigationItem" id="511-QD-dsf">
@@ -39,6 +43,7 @@
                         </segmentedControl>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicatorView" destination="l5M-od-kqA" id="nlt-eJ-oAC"/>
                         <outlet property="segmentedControl" destination="Z93-6T-XK2" id="w7B-Zq-0Iu"/>
                     </connections>
                 </collectionViewController>
