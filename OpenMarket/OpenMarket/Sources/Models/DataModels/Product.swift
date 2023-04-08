@@ -2,22 +2,23 @@ struct Product: Identifiable {
     let id: Int
     let vendorID: Int
     let vendorName: String
-    let name: String
-    let description: String
+    var name: String
+    var description: String
     let thumbnailURL: String
-    let currency: Currency
-    let price: Double
-    let bargainPrice: Double
-    let discountedPrice: Double
-    let stock: Int
+    var currency: Currency
+    var price: Double
+    var bargainPrice: Double
+    var discountedPrice: Double
+    var stock: Int
     let createdAt: String
     let issuedAt: String
-    let images: [ProductImage]?
+    var images: [ProductImage]?
     let vendors: ProductVendor?
+    var thumbnailId: Int?
 }
 
 extension Product: Decodable {
-    private enum CodingKeys: String, CodingKey {
+    private enum DecodingKeys: String, CodingKey {
         case id
         case vendorID = "vendor_id"
         case vendorName, name, description
@@ -33,7 +34,7 @@ extension Product: Decodable {
     }
 
     init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let container = try decoder.container(keyedBy: DecodingKeys.self)
         id = try container.decode(Int.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         description = try container.decode(String.self, forKey: .description)
@@ -56,5 +57,27 @@ extension Product: Decodable {
             vendorName = try container.decode(String.self, forKey: .vendorName)
             vendors = nil
         }
+    }
+}
+
+extension Product: Encodable {
+    private enum EncodingKeys: String, CodingKey {
+        case name, description
+        case thumbnailID = "thumbnail_id"
+        case price, currency
+        case discountedPrice = "discounted_price"
+        case stock, secret
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: EncodingKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(description, forKey: .description)
+        try container.encodeIfPresent(thumbnailId, forKey: .thumbnailID)
+        try container.encode(price, forKey: .price)
+        try container.encode(currency, forKey: .currency)
+        try container.encode(discountedPrice, forKey: .discountedPrice)
+        try container.encode(stock, forKey: .stock)
+        try container.encode(Secrets.password, forKey: .secret)
     }
 }

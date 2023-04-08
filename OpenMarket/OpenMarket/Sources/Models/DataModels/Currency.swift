@@ -1,4 +1,4 @@
-enum Currency: String, Decodable {
+enum Currency: String, Codable {
     case KRW
     case USD
 }
