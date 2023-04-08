@@ -1,6 +1,7 @@
 import Foundation
 
 enum OpenMarketError: Error {
+    case encodingError
     case decodingError
     case invalidRequest
     case networkError(error: Error)
@@ -9,6 +10,8 @@ enum OpenMarketError: Error {
 
     var localizedDescription: String {
         switch self {
+        case .encodingError:
+            return NSLocalizedString("Encoding Error", comment: "Encoding Error")
         case .decodingError:
             return NSLocalizedString("Decoding Error", comment: "Decoding Error")
         case .invalidRequest:

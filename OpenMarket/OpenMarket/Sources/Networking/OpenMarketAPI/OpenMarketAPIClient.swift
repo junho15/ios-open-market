@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 final class OpenMarketAPIClient {
     private let session: URLSessionProtocol
@@ -52,9 +52,37 @@ final class OpenMarketAPIClient {
             switch result {
             case .success(let data):
                 switch JSONDecoder().decode(data, to: Product.self) {
-                case .success(let products):
+                case .success(let product):
                     DispatchQueue.main.async {
-                        completion(.success(products))
+                        completion(.success(product))
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+
+    func createProduct(product: Product, images: [UIImage], completion: @escaping (Result<Product, Error>) -> Void) {
+        let images: [Data] = images.compactMap { image in
+            return image.jpegData(compressionQuality: 1.0)
+        }
+        let createProductRequest = OpenMarketRequest.createProduct(identifier: Secrets.identifier,
+                                                                   product: product,
+                                                                   images: images)
+        session.execute(request: createProductRequest) { result in
+            switch result {
+            case .success(let data):
+                switch JSONDecoder().decode(data, to: Product.self) {
+                case .success(let product):
+                    DispatchQueue.main.async {
+                        completion(.success(product))
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
