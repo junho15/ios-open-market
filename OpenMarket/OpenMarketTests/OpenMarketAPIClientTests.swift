@@ -1,6 +1,7 @@
 import XCTest
 @testable import OpenMarket
 
+// swiftlint:disable force_try
 final class OpenMarketAPIClientTests: XCTestCase {
     var sut: OpenMarketAPIClient!
     var stubURLSession: StubURLSession!
@@ -202,4 +203,70 @@ final class OpenMarketAPIClientTests: XCTestCase {
             }
         }
     }
+
+    func test_정상적인상황에서_createProduct_호출시_sucess를_반환하는지() {
+        // given
+        stubURLSession.data = TestData.validProductDetailData
+        stubURLSession.response = HTTPURLResponse(url: URL(string: "https://test.com")!,
+                                                  statusCode: 201,
+                                                  httpVersion: nil,
+                                                  headerFields: nil)
+        let expectation = self.expectation(description: "createProduct Complete")
+        let product = try! JSONDecoder().decode(Product.self, from: TestData.validProductDetailData)
+        let images = [UIImage.add, UIImage.remove]
+
+        // when
+        sut.createProduct(product: product, images: images) { result in
+            // then
+            switch result {
+            case .success(let createdProduct):
+                XCTAssertEqual(createdProduct.name, product.name)
+                XCTAssertEqual(createdProduct.price, product.price)
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0) { error in
+            if let error {
+                XCTFail(error.localizedDescription)
+            }
+        }
+    }
+
+    func test_createProduct_호출시_서버에서_400코드를보내면_badStatus에러를_반환하는지() {
+        // given
+        stubURLSession.data = nil
+        stubURLSession.response = HTTPURLResponse(url: URL(string: "https://test.com")!,
+                                                  statusCode: 400,
+                                                  httpVersion: nil,
+                                                  headerFields: nil)
+        let expectation = self.expectation(description: "createProduct Complete")
+        let product = try! JSONDecoder().decode(Product.self, from: TestData.validProductDetailData)
+        let images = [UIImage.add, UIImage.remove]
+
+        // when
+        sut.createProduct(product: product, images: images) { result in
+            // then
+            switch result {
+            case .success:
+                XCTFail("Should return failure")
+            case .failure(let error):
+                if let error = error as? OpenMarketError,
+                   case .badStatus = error {
+                    XCTAssert(true)
+                } else {
+                    XCTFail("Should return OpenMarketError.badStatus")
+                }
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1.0) { error in
+            if let error {
+                XCTFail(error.localizedDescription)
+            }
+        }
+    }
 }
+// swiftlint:enable force_try
