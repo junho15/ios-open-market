@@ -120,4 +120,38 @@ final class OpenMarketAPIClient {
             }
         }
     }
+
+    func deleteProduct(productID: Product.ID, completion: @escaping (Result<Void, Error>) -> Void) {
+        let fetchProductDeleteURIRequest = OpenMarketRequest.fetchProductDeleteURI(identifier: Secrets.identifier,
+                                                                                   productID: productID)
+        session.execute(request: fetchProductDeleteURIRequest) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let URIData):
+                guard let URI = String(data: URIData, encoding: .utf8) else {
+                    DispatchQueue.main.async {
+                        completion(.failure(OpenMarketError.decodingError))
+                    }
+                    return
+                }
+                let deleteProductRequest = OpenMarketRequest.deleteProduct(identifier: Secrets.identifier, URI: URI)
+                session.execute(request: deleteProductRequest) { result in
+                    switch result {
+                    case .success:
+                        DispatchQueue.main.async {
+                            completion(.success(()))
+                        }
+                    case .failure(let error):
+                        DispatchQueue.main.async {
+                            completion(.failure(error))
+                        }
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
 }

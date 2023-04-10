@@ -6,6 +6,8 @@ enum OpenMarketRequest: Requestable {
     case fetchProductDetail(productID: Product.ID)
     case createProduct(identifier: String, product: Product, images: [Data], boundary: String = UUID().uuidString)
     case updateProduct(identifier: String, product: Product)
+    case fetchProductDeleteURI(identifier: String, productID: Product.ID)
+    case deleteProduct(identifier: String, URI: String)
 
     var baseURL: URL {
         return Foundation.URL(string: "https://openmarket.yagom-academy.kr")!
@@ -23,6 +25,10 @@ enum OpenMarketRequest: Requestable {
             return "/api/products"
         case .updateProduct(_, let product):
             return "/api/products/\(product.id)"
+        case .fetchProductDeleteURI(_, let productID):
+            return "/api/products/\(productID)/archived"
+        case .deleteProduct(_, let URI):
+            return URI
         }
     }
 
@@ -38,6 +44,10 @@ enum OpenMarketRequest: Requestable {
             return .post
         case .updateProduct:
             return .patch
+        case .fetchProductDeleteURI:
+            return .post
+        case .deleteProduct:
+            return .delete
         }
     }
 
@@ -55,6 +65,11 @@ enum OpenMarketRequest: Requestable {
         case .updateProduct(let identifier, _):
             return ["identifier": identifier,
                     "Content-Type": "application/json"]
+        case .fetchProductDeleteURI(let identifier, _):
+            return ["identifier": identifier,
+                    "Content-Type": "application/json"]
+        case .deleteProduct(let identifier, _):
+            return ["identifier": identifier]
         }
     }
 
@@ -70,6 +85,10 @@ enum OpenMarketRequest: Requestable {
             return createHttpBodyToCreateProduct(product: product, images: images, boundary: boundary)
         case .updateProduct(_, let product):
             return createHttpBodyToUpdateProduct(product: product)
+        case .fetchProductDeleteURI:
+            return Secrets.passwordJSONData
+        case .deleteProduct:
+            return nil
         }
     }
 
