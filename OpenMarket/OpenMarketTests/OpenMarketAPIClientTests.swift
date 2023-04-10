@@ -1,7 +1,7 @@
 import XCTest
 @testable import OpenMarket
 
-// swiftlint:disable force_try
+// swiftlint:disable force_try file_length
 final class OpenMarketAPIClientTests: XCTestCase {
     var sut: OpenMarketAPIClient!
     var stubURLSession: StubURLSession!
@@ -353,5 +353,65 @@ extension OpenMarketAPIClientTests {
             }
         }
     }
+
+    func test_정상적인상황에서_deleteProduct_호출시_sucess를_반환하는지() {
+        // given
+        stubURLSession.data = "test".data(using: .utf8)
+        stubURLSession.response = HTTPURLResponse(url: URL(string: "https://test.com")!,
+                                                  statusCode: 204,
+                                                  httpVersion: nil,
+                                                  headerFields: nil)
+        let expectation = self.expectation(description: "deleteProduct Complete")
+
+        // when
+        sut.deleteProduct(productID: 1944) { result in
+            // then
+            switch result {
+            case .success:
+                XCTAssert(true)
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 2.0) { error in
+            if let error {
+                XCTFail(error.localizedDescription)
+            }
+        }
+    }
+
+    func test_deleteProduct_호출시_서버에서_500코드를보내면_badStatus에러를_반환하는지() {
+        // given
+        stubURLSession.response = HTTPURLResponse(url: URL(string: "https://test.com")!,
+                                                  statusCode: 500,
+                                                  httpVersion: nil,
+                                                  headerFields: nil)
+        let expectation = self.expectation(description: "deleteProduct Complete")
+
+        // when
+        sut.deleteProduct(productID: 1944) { result in
+            // then
+            switch result {
+            case .success:
+                XCTFail("Should return failure")
+            case .failure(let error):
+                if let error = error as? OpenMarketError,
+                   case .badStatus = error {
+                    XCTAssert(true)
+                } else {
+                    XCTFail("Should return OpenMarketError.badStatus")
+                }
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 2.0) { error in
+            if let error {
+                XCTFail(error.localizedDescription)
+            }
+        }
+    }
 }
-// swiftlint:enable force_try
+// swiftlint:enable force_try file_length
