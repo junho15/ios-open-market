@@ -96,4 +96,28 @@ final class OpenMarketAPIClient {
             }
         }
     }
+
+    func updateProduct(product: Product, completion: @escaping (Result<Product, Error>) -> Void) {
+        let updateProductRequest = OpenMarketRequest.updateProduct(identifier: Secrets.identifier,
+                                                                   product: product)
+        session.execute(request: updateProductRequest) { result in
+            switch result {
+            case .success(let data):
+                switch JSONDecoder().decode(data, to: Product.self) {
+                case .success(let product):
+                    DispatchQueue.main.async {
+                        completion(.success(product))
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
 }

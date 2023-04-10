@@ -5,6 +5,7 @@ enum OpenMarketRequest: Requestable {
     case fetchPage(pageNumber: Int, productsPerPage: Int)
     case fetchProductDetail(productID: Product.ID)
     case createProduct(identifier: String, product: Product, images: [Data], boundary: String = UUID().uuidString)
+    case updateProduct(identifier: String, product: Product)
 
     var baseURL: URL {
         return Foundation.URL(string: "https://openmarket.yagom-academy.kr")!
@@ -20,6 +21,8 @@ enum OpenMarketRequest: Requestable {
             return "/api/products/\(productID)"
         case .createProduct:
             return "/api/products"
+        case .updateProduct(_, let product):
+            return "/api/products/\(product.id)"
         }
     }
 
@@ -33,6 +36,8 @@ enum OpenMarketRequest: Requestable {
             return .get
         case .createProduct:
             return .post
+        case .updateProduct:
+            return .patch
         }
     }
 
@@ -47,6 +52,9 @@ enum OpenMarketRequest: Requestable {
         case .createProduct(let identifier, _, _, let boundary):
             return ["identifier": identifier,
                     "Content-Type": "multipart/form-data; boundary=\(boundary)"]
+        case .updateProduct(let identifier, _):
+            return ["identifier": identifier,
+                    "Content-Type": "application/json"]
         }
     }
 
@@ -60,6 +68,8 @@ enum OpenMarketRequest: Requestable {
             return nil
         case .createProduct(_, let product, let images, let boundary):
             return createHttpBodyToCreateProduct(product: product, images: images, boundary: boundary)
+        case .updateProduct(_, let product):
+            return createHttpBodyToUpdateProduct(product: product)
         }
     }
 
@@ -86,5 +96,15 @@ enum OpenMarketRequest: Requestable {
         }
         body.append("--\(boundary)--")
         return body
+    }
+
+    private func createHttpBodyToUpdateProduct(product: Product) -> Data? {
+        switch JSONEncoder().encode(from: product) {
+        case.success(let productData):
+            return productData
+        case .failure(let error):
+            print(error.localizedDescription)
+            return nil
+        }
     }
 }
