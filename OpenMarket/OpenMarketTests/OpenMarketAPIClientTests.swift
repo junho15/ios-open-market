@@ -18,7 +18,11 @@ final class OpenMarketAPIClientTests: XCTestCase {
         stubURLSession = nil
         try super.tearDownWithError()
     }
+}
 
+// MARK: - checkHealth
+
+extension OpenMarketAPIClientTests {
     func test_checkHealth_호출시_서버에서_200코드를보내면_sucess를_반환하는지() {
         // given
         stubURLSession.data = Data()
@@ -79,7 +83,11 @@ final class OpenMarketAPIClientTests: XCTestCase {
             }
         }
     }
+}
 
+// MARK: - fetchPage
+
+extension OpenMarketAPIClientTests {
     func test_정상적인상황에서_fetchPage_호출시_sucess를_반환하는지() {
         // given
         stubURLSession.data = TestData.validPageData
@@ -141,7 +149,11 @@ final class OpenMarketAPIClientTests: XCTestCase {
             }
         }
     }
+}
 
+// MARK: - fetchProductDetail
+
+extension OpenMarketAPIClientTests {
     func test_정상적인상황에서_fetchProductDetail_호출시_sucess를_반환하는지() {
         // given
         stubURLSession.data = TestData.validProductDetailData
@@ -203,7 +215,11 @@ final class OpenMarketAPIClientTests: XCTestCase {
             }
         }
     }
+}
 
+// MARK: - createProduct
+
+extension OpenMarketAPIClientTests {
     func test_정상적인상황에서_createProduct_호출시_sucess를_반환하는지() {
         // given
         stubURLSession.data = TestData.validProductDetailData
@@ -247,6 +263,75 @@ final class OpenMarketAPIClientTests: XCTestCase {
 
         // when
         sut.createProduct(product: product, images: images) { result in
+            // then
+            switch result {
+            case .success:
+                XCTFail("Should return failure")
+            case .failure(let error):
+                if let error = error as? OpenMarketError,
+                   case .badStatus = error {
+                    XCTAssert(true)
+                } else {
+                    XCTFail("Should return OpenMarketError.badStatus")
+                }
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1.0) { error in
+            if let error {
+                XCTFail(error.localizedDescription)
+            }
+        }
+    }
+}
+
+// MARK: - updateProduct
+
+extension OpenMarketAPIClientTests {
+    func test_정상적인상황에서_updateProduct_호출시_sucess를_반환하는지() {
+        // given
+        stubURLSession.data = TestData.validProductDetailData
+        stubURLSession.response = HTTPURLResponse(url: URL(string: "https://test.com")!,
+                                                  statusCode: 200,
+                                                  httpVersion: nil,
+                                                  headerFields: nil)
+        let expectation = self.expectation(description: "updateProduct Complete")
+        var product = try! JSONDecoder().decode(Product.self, from: TestData.validProductDetailData)
+        product.thumbnailId = 2
+
+        // when
+        sut.updateProduct(product: product) { result in
+            // then
+            switch result {
+            case .success(let updatedProduct):
+                XCTAssertEqual(updatedProduct.name, product.name)
+                XCTAssertEqual(updatedProduct.price, product.price)
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0) { error in
+            if let error {
+                XCTFail(error.localizedDescription)
+            }
+        }
+    }
+
+    func test_updateProduct_호출시_서버에서_400코드를보내면_badStatus에러를_반환하는지() {
+        // given
+        stubURLSession.data = nil
+        stubURLSession.response = HTTPURLResponse(url: URL(string: "https://test.com")!,
+                                                  statusCode: 400,
+                                                  httpVersion: nil,
+                                                  headerFields: nil)
+        let expectation = self.expectation(description: "updateProduct Complete")
+        var product = try! JSONDecoder().decode(Product.self, from: TestData.validProductDetailData)
+        product.thumbnailId = 2
+
+        // when
+        sut.updateProduct(product: product) { result in
             // then
             switch result {
             case .success:
