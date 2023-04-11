@@ -128,8 +128,8 @@ extension ProductListViewController {
 // MARK: - DataSource
 
 extension ProductListViewController {
-    typealias DataSource = UICollectionViewDiffableDataSource<ProductListSection, Product.ID>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<ProductListSection, Product.ID>
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, Product.ID>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Product.ID>
 
     private func listCellRegistrationHandler(cell: UICollectionViewListCell,
                                              indexPath: IndexPath,
@@ -200,7 +200,7 @@ extension ProductListViewController {
 
     private func updateSnapshot(reloading changedProductIDs: [Product.ID] = [], animatingDifferences: Bool = true) {
         var snapshot = Snapshot()
-        snapshot.appendSections([ProductListSection.main])
+        snapshot.appendSections([Section.main])
         snapshot.appendItems(productIDs)
         if changedProductIDs.isEmpty == false {
             snapshot.reloadItems(changedProductIDs)
