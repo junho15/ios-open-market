@@ -32,6 +32,7 @@
 		EB4FE68929E587CC001CCF4C /* NumberSegmentContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4FE68829E587CC001CCF4C /* NumberSegmentContentView.swift */; };
 		EB4FE68B29E59136001CCF4C /* CollectionViewContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4FE68A29E59136001CCF4C /* CollectionViewContentView.swift */; };
 		EB4FE68D29E5914F001CCF4C /* ImageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4FE68C29E5914F001CCF4C /* ImageContentView.swift */; };
+		EB4FE69029E65452001CCF4C /* NumberTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4FE68F29E65452001CCF4C /* NumberTextField.swift */; };
 		EB5567FD29C1BA2700C1469D /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5567FC29C1BA2700C1469D /* Currency.swift */; };
 		EB5567FF29C1BA6B00C1469D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5567FE29C1BA6B00C1469D /* Product.swift */; };
 		EB55680129C1BDD300C1469D /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55680029C1BDD300C1469D /* Page.swift */; };
@@ -94,6 +95,7 @@
 		EB4FE68829E587CC001CCF4C /* NumberSegmentContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberSegmentContentView.swift; sourceTree = "<group>"; };
 		EB4FE68A29E59136001CCF4C /* CollectionViewContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewContentView.swift; sourceTree = "<group>"; };
 		EB4FE68C29E5914F001CCF4C /* ImageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageContentView.swift; sourceTree = "<group>"; };
+		EB4FE68F29E65452001CCF4C /* NumberTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberTextField.swift; sourceTree = "<group>"; };
 		EB5567FC29C1BA2700C1469D /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		EB5567FE29C1BA6B00C1469D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		EB55680029C1BDD300C1469D /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
@@ -232,6 +234,14 @@
 			path = ContentViews;
 			sourceTree = "<group>";
 		};
+		EB4FE68E29E653C9001CCF4C /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				EB4FE68F29E65452001CCF4C /* NumberTextField.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
 		EB5567F629C1B4F600C1469D /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -277,6 +287,7 @@
 		EB5567FB29C1B59300C1469D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EB4FE68E29E653C9001CCF4C /* CustomViews */,
 				EB4FE68129E583B3001CCF4C /* ContentViews */,
 				EB4FE67A29E551CA001CCF4C /* ProductEditorView */,
 				EBDC9A4429DAEEBD007AD736 /* ProductListView */,
@@ -484,6 +495,7 @@
 				EB75D63D29D5C4F7001B8719 /* OpenMarketRequest.swift in Sources */,
 				EBABE70729D67F2F008739B1 /* OpenMarketError.swift in Sources */,
 				EBAB055A29E1A0A70045528E /* Data.swift in Sources */,
+				EB4FE69029E65452001CCF4C /* NumberTextField.swift in Sources */,
 				EB4FE67C29E55265001CCF4C /* ProductEditorViewController.swift in Sources */,
 				EB4FE68D29E5914F001CCF4C /* ImageContentView.swift in Sources */,
 				EB40DB2529DDA156007F29FF /* ImageCache.swift in Sources */,
