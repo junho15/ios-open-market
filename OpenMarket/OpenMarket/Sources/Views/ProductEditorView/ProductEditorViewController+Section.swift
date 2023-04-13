@@ -1,5 +1,5 @@
 extension ProductEditorViewController {
-    enum Section {
+    enum Section: Int {
         case main
     }
 }

@@ -1,6 +1,6 @@
 import UIKit
 
-class NumberContentView: UIView, UIContentView {
+final class NumberContentView: UIView, UIContentView {
     var configuration: UIContentConfiguration {
         didSet {
             configure(configuration)
@@ -23,11 +23,13 @@ class NumberContentView: UIView, UIContentView {
 
     func configure(_ configuration: UIContentConfiguration) {
         if let configuration = configuration as? IntNumberConfiguration {
-            numberTextField.numberType = configuration.keyboardType
+            numberTextField.numberType = configuration.numberType
             numberTextField.setNumericValue(configuration.number)
+            numberTextField.placeholder = configuration.placeholder
         } else if let configuration = configuration as? DoubleNumberConfiguration {
             numberTextField.numberType = configuration.numberType
             numberTextField.setNumericValue(configuration.number)
+            numberTextField.placeholder = configuration.placeholder
         }
     }
 
@@ -54,7 +56,7 @@ class NumberContentView: UIView, UIContentView {
         NSLayoutConstraint.activate([
             numberTextField.topAnchor.constraint(equalTo: topAnchor),
             numberTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: spacing),
-            numberTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: spacing),
+            numberTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -spacing),
             numberTextField.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
 
@@ -69,8 +71,9 @@ extension NumberContentView {
 
 extension NumberContentView {
     struct IntNumberConfiguration: UIContentConfiguration {
+        let numberType: NumberTextField.NumberType = .int
         var number: Int?
-        var keyboardType: NumberTextField.NumberType = .int
+        var placeholder: String?
         var onChange: ((Int) -> Void)?
 
         func makeContentView() -> UIView & UIContentView {
@@ -83,8 +86,9 @@ extension NumberContentView {
     }
 
     struct DoubleNumberConfiguration: UIContentConfiguration {
+        let numberType: NumberTextField.NumberType = .double
         var number: Double?
-        var numberType: NumberTextField.NumberType = .double
+        var placeholder: String?
         var onChange: ((Double) -> Void)?
 
         func makeContentView() -> UIView & UIContentView {

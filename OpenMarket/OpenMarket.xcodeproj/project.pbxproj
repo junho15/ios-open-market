@@ -33,6 +33,7 @@
 		EB4FE68B29E59136001CCF4C /* CollectionViewContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4FE68A29E59136001CCF4C /* CollectionViewContentView.swift */; };
 		EB4FE68D29E5914F001CCF4C /* ImageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4FE68C29E5914F001CCF4C /* ImageContentView.swift */; };
 		EB4FE69029E65452001CCF4C /* NumberTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4FE68F29E65452001CCF4C /* NumberTextField.swift */; };
+		EB4FE69229E7DC16001CCF4C /* ImagePickerContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4FE69129E7DC16001CCF4C /* ImagePickerContentView.swift */; };
 		EB5567FD29C1BA2700C1469D /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5567FC29C1BA2700C1469D /* Currency.swift */; };
 		EB5567FF29C1BA6B00C1469D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5567FE29C1BA6B00C1469D /* Product.swift */; };
 		EB55680129C1BDD300C1469D /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55680029C1BDD300C1469D /* Page.swift */; };
@@ -96,6 +97,7 @@
 		EB4FE68A29E59136001CCF4C /* CollectionViewContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewContentView.swift; sourceTree = "<group>"; };
 		EB4FE68C29E5914F001CCF4C /* ImageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageContentView.swift; sourceTree = "<group>"; };
 		EB4FE68F29E65452001CCF4C /* NumberTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberTextField.swift; sourceTree = "<group>"; };
+		EB4FE69129E7DC16001CCF4C /* ImagePickerContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerContentView.swift; sourceTree = "<group>"; };
 		EB5567FC29C1BA2700C1469D /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		EB5567FE29C1BA6B00C1469D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		EB55680029C1BDD300C1469D /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				EBC7752829DEE49C002DD87A /* ProductGridContentView.swift */,
 				EB4FE68A29E59136001CCF4C /* CollectionViewContentView.swift */,
 				EB4FE68C29E5914F001CCF4C /* ImageContentView.swift */,
+				EB4FE69129E7DC16001CCF4C /* ImagePickerContentView.swift */,
 				EB4FE68229E5842F001CCF4C /* TextFieldContentView.swift */,
 				EB4FE68429E5844F001CCF4C /* TextViewContentView.swift */,
 				EB4FE68629E587A5001CCF4C /* NumberContentView.swift */,
@@ -502,6 +505,7 @@
 				EB4FE68729E587A5001CCF4C /* NumberContentView.swift in Sources */,
 				EB40DB2929DDA6A4007F29FF /* ImageLoader.swift in Sources */,
 				EBAB055629E192B50045528E /* Secrets.swift in Sources */,
+				EB4FE69229E7DC16001CCF4C /* ImagePickerContentView.swift in Sources */,
 				EB4FE68929E587CC001CCF4C /* NumberSegmentContentView.swift in Sources */,
 				EB4FE68529E5844F001CCF4C /* TextViewContentView.swift in Sources */,
 				EBDC9A4329DAEE65007AD736 /* ProductListViewController+LayoutStyle.swift in Sources */,

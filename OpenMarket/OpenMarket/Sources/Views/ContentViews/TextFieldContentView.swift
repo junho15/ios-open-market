@@ -1,6 +1,6 @@
 import UIKit
 
-class TextFieldContentView: UIView, UIContentView {
+final class TextFieldContentView: UIView, UIContentView {
     var configuration: UIContentConfiguration {
         didSet {
             configure(configuration)
@@ -24,6 +24,7 @@ class TextFieldContentView: UIView, UIContentView {
     func configure(_ configuration: UIContentConfiguration) {
         guard let configuration = configuration as? Configuration else { return }
         textField.text = configuration.text
+        textField.placeholder = configuration.placeholder
     }
 
     private func configureSubviews() {
@@ -46,7 +47,7 @@ class TextFieldContentView: UIView, UIContentView {
         NSLayoutConstraint.activate([
             textField.topAnchor.constraint(equalTo: topAnchor),
             textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: spacing),
-            textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: spacing),
+            textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -spacing),
             textField.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
@@ -61,6 +62,7 @@ extension TextFieldContentView {
 extension TextFieldContentView {
     struct Configuration: UIContentConfiguration {
         var text: String = ""
+        var placeholder: String?
         var onChange: ((String) -> Void)?
 
         func makeContentView() -> UIView & UIContentView {

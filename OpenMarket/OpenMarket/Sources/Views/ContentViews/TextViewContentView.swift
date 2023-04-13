@@ -1,6 +1,6 @@
 import UIKit
 
-class TextViewContentView: UIView, UIContentView {
+final class TextViewContentView: UIView, UIContentView {
     var configuration: UIContentConfiguration {
         didSet {
             configure(configuration)
@@ -38,7 +38,7 @@ class TextViewContentView: UIView, UIContentView {
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: topAnchor),
             textView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: spacing),
-            textView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: spacing),
+            textView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -spacing),
             textView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }

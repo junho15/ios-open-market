@@ -128,8 +128,8 @@ extension ProductListViewController {
 // MARK: - DataSource
 
 extension ProductListViewController {
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, Product.ID>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Product.ID>
+    private typealias DataSource = UICollectionViewDiffableDataSource<Section, Product.ID>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Product.ID>
 
     private func listCellRegistrationHandler(cell: UICollectionViewListCell,
                                              indexPath: IndexPath,

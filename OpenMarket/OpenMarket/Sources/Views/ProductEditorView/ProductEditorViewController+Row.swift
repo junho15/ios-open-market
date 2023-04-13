@@ -1,8 +1,8 @@
 import UIKit
 
 extension ProductEditorViewController {
-    enum Row: CustomStringConvertible {
-        case images(images: [UIImage], isEditable: Bool)
+    enum Row: Hashable, CustomStringConvertible {
+        case images(images: [UIImage], canAdd: Bool)
         case name(text: String)
         case priceCurrency(price: Double, currency: Currency)
         case discountedPrice(discountedPrice: Double)

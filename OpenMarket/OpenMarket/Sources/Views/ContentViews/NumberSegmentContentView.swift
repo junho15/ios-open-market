@@ -1,6 +1,6 @@
 import UIKit
 
-class NumberSegmentContentView: UIView, UIContentView {
+final class NumberSegmentContentView: UIView, UIContentView {
     var configuration: UIContentConfiguration {
         didSet {
             configure(configuration)
@@ -28,6 +28,7 @@ class NumberSegmentContentView: UIView, UIContentView {
         guard let configuration = configuration as? Configuration else { return }
         numberTextField.numberType = configuration.numberType
         numberTextField.setNumericValue(configuration.number)
+        numberTextField.placeholder = configuration.placeholder
 
         if segmentsTitle != configuration.segmentsTitle {
             segmentedControl.removeAllSegments()
@@ -65,7 +66,7 @@ class NumberSegmentContentView: UIView, UIContentView {
         stackView.axis = .horizontal
         stackView.spacing = Constants.layoutSpacing
         stackView.distribution = .fill
-        stackView.alignment = .fill
+        stackView.alignment = .center
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
         [numberTextField, segmentedControl].forEach(stackView.addArrangedSubview)
@@ -75,7 +76,7 @@ class NumberSegmentContentView: UIView, UIContentView {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: spacing),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: spacing),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -spacing),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         segmentedControl.setContentHuggingPriority(.required, for: .horizontal)
@@ -90,10 +91,11 @@ extension NumberSegmentContentView {
 
 extension NumberSegmentContentView {
     struct Configuration: UIContentConfiguration {
+        let numberType: NumberTextField.NumberType = .double
         var number: Double?
+        var placeholder: String?
         var segmentsTitle: [String] = []
         var selectedSegmentIndex: Int = 0
-        var numberType: NumberTextField.NumberType = .double
         var onChangeNumber: ((Double) -> Void)?
         var onChangeSegment: ((Int) -> Void)?
 
