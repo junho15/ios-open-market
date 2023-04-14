@@ -7,7 +7,7 @@ final class NumberSegmentContentView: UIView, UIContentView {
         }
     }
     override var intrinsicContentSize: CGSize {
-        CGSize(width: 0, height: 44)
+        CGSize(width: UIView.noIntrinsicMetric, height: 44)
     }
     private let stackView = UIStackView()
     private let numberTextField = NumberTextField()
@@ -17,6 +17,7 @@ final class NumberSegmentContentView: UIView, UIContentView {
     init(_ configuration: UIContentConfiguration) {
         self.configuration = configuration
         super.init(frame: .zero)
+        backgroundColor = .systemBackground
         configureSubviews()
     }
 

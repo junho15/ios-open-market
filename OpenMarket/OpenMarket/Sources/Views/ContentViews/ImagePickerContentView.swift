@@ -3,7 +3,7 @@ import UIKit
 final class ImagePickerContentView: UIView, UIContentView {
     var configuration: UIContentConfiguration
     override var intrinsicContentSize: CGSize {
-        CGSize(width: 150, height: 150)
+        CGSize(width: UIView.noIntrinsicMetric, height: 140)
     }
     private let imagePickerButton = UIButton()
     private var onClick: (() -> Void)?
@@ -33,12 +33,11 @@ final class ImagePickerContentView: UIView, UIContentView {
         imagePickerButton.translatesAutoresizingMaskIntoConstraints = false
         addSubview(imagePickerButton)
 
-        let spacing = Constants.layoutSpacing
         NSLayoutConstraint.activate([
-            imagePickerButton.topAnchor.constraint(equalTo: topAnchor, constant: spacing),
-            imagePickerButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: spacing),
-            imagePickerButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -spacing),
-            imagePickerButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -spacing)
+            imagePickerButton.topAnchor.constraint(equalTo: topAnchor),
+            imagePickerButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+            imagePickerButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            imagePickerButton.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 }
@@ -46,7 +45,6 @@ final class ImagePickerContentView: UIView, UIContentView {
 extension ImagePickerContentView {
     private enum Constants {
         static let placeholderImage = UIImage.add
-        static let layoutSpacing = CGFloat(10)
     }
 }
 

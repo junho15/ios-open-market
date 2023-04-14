@@ -7,7 +7,7 @@ final class ImageContentView: UIView, UIContentView {
         }
     }
     override var intrinsicContentSize: CGSize {
-        CGSize(width: 150, height: 150)
+        CGSize(width: UIView.noIntrinsicMetric, height: 140)
     }
     private let imageView = UIImageView()
 

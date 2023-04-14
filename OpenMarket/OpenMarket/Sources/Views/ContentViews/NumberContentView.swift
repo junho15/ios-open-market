@@ -7,13 +7,14 @@ final class NumberContentView: UIView, UIContentView {
         }
     }
     override var intrinsicContentSize: CGSize {
-        CGSize(width: 0, height: 44)
+        CGSize(width: UIView.noIntrinsicMetric, height: 44)
     }
     private let numberTextField = NumberTextField()
 
     init(_ configuration: UIContentConfiguration) {
         self.configuration = configuration
         super.init(frame: .zero)
+        backgroundColor = .systemBackground
         configureSubviews()
     }
 

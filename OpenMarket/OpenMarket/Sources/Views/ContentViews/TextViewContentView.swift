@@ -7,13 +7,14 @@ final class TextViewContentView: UIView, UIContentView {
         }
     }
     override var intrinsicContentSize: CGSize {
-        CGSize(width: 0, height: 200)
+        CGSize(width: UIView.noIntrinsicMetric, height: 200)
     }
     private let textView = UITextView()
 
     init(_ configuration: UIContentConfiguration) {
         self.configuration = configuration
         super.init(frame: .zero)
+        backgroundColor = .systemBackground
         configureSubviews()
     }
 

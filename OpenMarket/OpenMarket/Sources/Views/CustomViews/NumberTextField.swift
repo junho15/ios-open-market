@@ -11,6 +11,7 @@ final class NumberTextField: UITextField {
         super.init(frame: .zero)
         self.numberType = keyboardType
         self.keyboardType = keyboardType.keyboardType
+        self.delegate = self
     }
 
     required init?(coder: NSCoder) {
