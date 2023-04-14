@@ -7,7 +7,8 @@ extension NumberFormatter {
         return formatter
     }()
 
-    static func decimalString<T: Numeric>(_ number: T) -> String? {
+    static func decimalString<T: Numeric>(_ number: T, usesGroupingSeparator: Bool = true) -> String? {
+        decimalFormatter.usesGroupingSeparator = usesGroupingSeparator
         return decimalFormatter.string(for: number)
     }
 }

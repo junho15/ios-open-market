@@ -19,7 +19,7 @@ final class NumberTextField: UITextField {
 
     func setNumericValue<T: Numeric & LosslessStringConvertible>(_ value: T?) {
         if let value {
-            text = String(value)
+            text = NumberFormatter.decimalString(value, usesGroupingSeparator: false)
         } else {
             text = nil
         }
