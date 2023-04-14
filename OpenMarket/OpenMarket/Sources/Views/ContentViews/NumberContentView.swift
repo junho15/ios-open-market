@@ -41,9 +41,9 @@ final class NumberContentView: UIView, UIContentView {
             UIAction(handler: { [weak self] _ in
                 guard let self else { return }
                 if let configuration = configuration as? IntNumberConfiguration {
-                    configuration.onChange?(numberTextField.numericValue() ?? 0)
+                    configuration.onChange?(numberTextField.numericValue())
                 } else if let configuration = configuration as? DoubleNumberConfiguration {
-                    configuration.onChange?(numberTextField.numericValue() ?? 0)
+                    configuration.onChange?(numberTextField.numericValue())
                 }
             }),
             for: .editingChanged
@@ -74,7 +74,7 @@ extension NumberContentView {
         let numberType: NumberTextField.NumberType = .int
         var number: Int?
         var placeholder: String?
-        var onChange: ((Int) -> Void)?
+        var onChange: ((Int?) -> Void)?
 
         func makeContentView() -> UIView & UIContentView {
             return NumberContentView(self)
@@ -89,7 +89,7 @@ extension NumberContentView {
         let numberType: NumberTextField.NumberType = .double
         var number: Double?
         var placeholder: String?
-        var onChange: ((Double) -> Void)?
+        var onChange: ((Double?) -> Void)?
 
         func makeContentView() -> UIView & UIContentView {
             return NumberContentView(self)

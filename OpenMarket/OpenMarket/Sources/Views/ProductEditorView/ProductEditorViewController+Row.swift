@@ -4,9 +4,9 @@ extension ProductEditorViewController {
     enum Row: Hashable, CustomStringConvertible {
         case images(images: [UIImage], canAdd: Bool)
         case name(text: String)
-        case priceCurrency(price: Double, currency: Currency)
-        case discountedPrice(discountedPrice: Double)
-        case stock(stock: Int)
+        case priceCurrency(price: Double?, currency: Currency)
+        case discountedPrice(discountedPrice: Double?)
+        case stock(stock: Int?)
         case description(text: String)
 
         var description: String {

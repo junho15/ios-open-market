@@ -139,8 +139,8 @@ extension ProductListViewController {
         contentConfiguration.text = product.name
         contentConfiguration.textProperties.font = UIFont.preferredFont(forTextStyle: .body)
         let priceAttributedText = ProductAttributedStringMaker.oneLinePrice(currency: product.currency,
-                                                             price: product.price,
-                                                             bargainPrice: product.bargainPrice).attributedString
+                                                             price: product.price ?? 0,
+                                                             bargainPrice: product.bargainPrice ?? 0).attributedString
         contentConfiguration.secondaryAttributedText = priceAttributedText
         contentConfiguration.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .caption2)
 
@@ -164,7 +164,7 @@ extension ProductListViewController {
 
         cell.contentConfiguration = contentConfiguration
 
-        let stockCellAccessory = ProductCellAccessoryMaker.stockLabel(stock: product.stock).cellAccessory
+        let stockCellAccessory = ProductCellAccessoryMaker.stockLabel(stock: product.stock ?? 0).cellAccessory
         cell.accessories = [stockCellAccessory, .disclosureIndicator(displayed: .always)]
     }
 

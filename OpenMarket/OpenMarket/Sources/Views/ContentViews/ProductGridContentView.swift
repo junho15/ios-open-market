@@ -28,10 +28,10 @@ final class ProductGridContentView: UIView, UIContentView {
         nameLabel.text = configuration.name
         priceLabel.attributedText = ProductAttributedStringMaker.twoLinePrice(
             currency: configuration.currency,
-            price: configuration.price,
-            bargainPrice: configuration.bargainPrice
+            price: configuration.price ?? 0,
+            bargainPrice: configuration.bargainPrice ?? 0
         ).attributedString
-        stockLabel.attributedText = ProductAttributedStringMaker.stock(stock: configuration.stock).attributedString
+        stockLabel.attributedText = ProductAttributedStringMaker.stock(stock: configuration.stock ?? 0).attributedString
     }
 
     private func configureSubviews() {
@@ -74,9 +74,9 @@ extension ProductGridContentView {
         var thumbnailImage: UIImage?
         var name: String = ""
         var currency: Currency = .KRW
-        var price: Double = 0
-        var bargainPrice: Double = 0
-        var stock: Int = 0
+        var price: Double? = 0
+        var bargainPrice: Double? = 0
+        var stock: Int? = 0
 
         func makeContentView() -> UIView & UIContentView {
             return ProductGridContentView(self)

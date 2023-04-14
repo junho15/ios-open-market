@@ -49,7 +49,7 @@ final class NumberSegmentContentView: UIView, UIContentView {
             UIAction(handler: { [weak self] _ in
                 guard let self,
                       let configuration = configuration as? Configuration else { return }
-                    configuration.onChangeNumber?(numberTextField.numericValue() ?? 0)
+                    configuration.onChangeNumber?(numberTextField.numericValue())
             }),
             for: .editingChanged
         )
@@ -96,7 +96,7 @@ extension NumberSegmentContentView {
         var placeholder: String?
         var segmentsTitle: [String] = []
         var selectedSegmentIndex: Int = 0
-        var onChangeNumber: ((Double) -> Void)?
+        var onChangeNumber: ((Double?) -> Void)?
         var onChangeSegment: ((Int) -> Void)?
 
         func makeContentView() -> UIView & UIContentView {

@@ -6,15 +6,65 @@ struct Product: Identifiable {
     var description: String
     let thumbnailURL: String
     var currency: Currency
-    var price: Double
-    var bargainPrice: Double
-    var discountedPrice: Double
-    var stock: Int
+    var price: Double?
+    var bargainPrice: Double?
+    var discountedPrice: Double?
+    var stock: Int?
     let createdAt: String
     let issuedAt: String
     var images: [ProductImage]?
     let vendors: ProductVendor?
     var thumbnailId: Int?
+
+    init(id: Int,
+         vendorID: Int,
+         vendorName: String,
+         name: String,
+         description: String,
+         thumbnailURL: String,
+         currency: Currency,
+         price: Double?,
+         bargainPrice: Double?,
+         discountedPrice: Double?,
+         stock: Int?,
+         createdAt: String,
+         issuedAt: String,
+         images: [ProductImage]? = nil,
+         vendors: ProductVendor? = nil,
+         thumbnailId: Int? = nil) {
+        self.id = id
+        self.vendorID = vendorID
+        self.vendorName = vendorName
+        self.name = name
+        self.description = description
+        self.thumbnailURL = thumbnailURL
+        self.currency = currency
+        self.price = price
+        self.bargainPrice = bargainPrice
+        self.discountedPrice = discountedPrice
+        self.stock = stock
+        self.createdAt = createdAt
+        self.issuedAt = issuedAt
+        self.images = images
+        self.vendors = vendors
+        self.thumbnailId = thumbnailId
+    }
+
+    init() {
+        self.init(id: 0,
+                  vendorID: 0,
+                  vendorName: "",
+                  name: "",
+                  description: "",
+                  thumbnailURL: "",
+                  currency: .KRW,
+                  price: nil,
+                  bargainPrice: nil,
+                  discountedPrice: nil,
+                  stock: nil,
+                  createdAt: "",
+                  issuedAt: "")
+    }
 }
 
 extension Product: Decodable {
