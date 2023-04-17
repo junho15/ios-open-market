@@ -60,8 +60,8 @@ struct Product: Identifiable {
                   currency: .KRW,
                   price: nil,
                   bargainPrice: nil,
-                  discountedPrice: nil,
-                  stock: nil,
+                  discountedPrice: 0,
+                  stock: 0,
                   createdAt: "",
                   issuedAt: "")
     }
