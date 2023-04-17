@@ -1,12 +1,12 @@
 import Foundation
 
 protocol URLSessionProtocol {
-    func execute(request: Requestable, completion: @escaping (Result<Data, Error>) -> Void)
-    func execute(url: URL, completion: @escaping (Result<Data, Error>) -> Void)
+    func execute(request: Requestable, completion: @escaping (Result<Data, OpenMarketError>) -> Void)
+    func execute(url: URL, completion: @escaping (Result<Data, OpenMarketError>) -> Void)
 }
 
 extension URLSession: URLSessionProtocol {
-    func execute(request: Requestable, completion: @escaping (Result<Data, Error>) -> Void) {
+    func execute(request: Requestable, completion: @escaping (Result<Data, OpenMarketError>) -> Void) {
         guard let urlRequest = request.urlRequest else {
             completion(.failure(OpenMarketError.invalidRequest))
             return
@@ -30,7 +30,7 @@ extension URLSession: URLSessionProtocol {
         }.resume()
     }
 
-    func execute(url: URL, completion: @escaping (Result<Data, Error>) -> Void) {
+    func execute(url: URL, completion: @escaping (Result<Data, OpenMarketError>) -> Void) {
         self.dataTask(with: url) { data, response, error in
             if let error {
                 completion(.failure(OpenMarketError.networkError(error: error)))
