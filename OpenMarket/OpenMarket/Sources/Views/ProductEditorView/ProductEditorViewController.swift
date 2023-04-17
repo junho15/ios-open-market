@@ -13,6 +13,7 @@ final class ProductEditorViewController: UICollectionViewController, ProductEdit
     private var dataSource: DataSource!
     private var product: Product
     private var images: [UIImage] = []
+    private var isPickingImage: Bool = false
 
     // MARK: View Lifecycle
 
@@ -166,6 +167,7 @@ extension ProductEditorViewController {
     }
 
     private func presentPicker() {
+        guard isPickingImage == false else { return }
         var configuration = PHPickerConfiguration(photoLibrary: .shared())
         configuration.filter = PHPickerFilter.images
         configuration.preferredAssetRepresentationMode = .current
@@ -317,7 +319,8 @@ extension ProductEditorViewController: PHPickerViewControllerDelegate {
                 forTypeIdentifier: "public.image"
             ) { [weak self] imageData, error in
                 guard let self else { return }
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
                     if let error {
                         let alertPresenter = AlertPresenter()
                         alertPresenter.showAlert(title: error.localizedDescription, message: nil, in: self)
@@ -325,8 +328,14 @@ extension ProductEditorViewController: PHPickerViewControllerDelegate {
                     }
                     if let imageData,
                        let image = UIImage(data: imageData) {
-                        self.images.append(image)
-                        self.updateSnapshot()
+                        isPickingImage = true
+                        image.limitSize(maxSizeInKb: 300) { [weak self] limitedImage in
+                            guard let self else { return }
+                            isPickingImage = false
+                            guard let limitedImage else { return }
+                            self.images.append(limitedImage)
+                            self.updateSnapshot()
+                        }
                     }
                 }
             }
