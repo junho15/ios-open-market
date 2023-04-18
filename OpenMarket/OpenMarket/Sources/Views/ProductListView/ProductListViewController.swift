@@ -47,17 +47,21 @@ final class ProductListViewController: UICollectionViewController {
 
     @IBAction func addBarButtonItemTapped(_ sender: UIBarButtonItem) {
         let newProduct = Product()
-        let viewController = ProductEditorViewController(product: newProduct, editMode: .add) { [weak self] _ in
-            guard let self else { return }
-            dismiss(animated: true)
-            DispatchQueue.main.async {
-                self.clearProducts()
-                self.loadProducts(pageNumber: self.nextPageNumber,
-                                  productsPerPage: Constants.productsPerPage,
-                                  withActivityIndicator: true)
-            }
-        }
-        let navigationController = UINavigationController(rootViewController: viewController)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let productDetailViewController = storyboard.instantiateViewController(
+            identifier: "ProductEditorViewController", creator: { coder in
+                return ProductEditorViewController(coder: coder, product: newProduct, editMode: .add) { [weak self] _ in
+                    guard let self else { return }
+                    dismiss(animated: true)
+                    DispatchQueue.main.async {
+                        self.clearProducts()
+                        self.loadProducts(pageNumber: self.nextPageNumber,
+                                          productsPerPage: Constants.productsPerPage,
+                                          withActivityIndicator: true)
+                    }
+                }
+            })
+        let navigationController = UINavigationController(rootViewController: productDetailViewController)
         present(navigationController, animated: true)
     }
 }

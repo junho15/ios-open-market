@@ -162,7 +162,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4y2-rZ-4MJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2662" y="4"/>
+            <point key="canvasLocation" x="1795" y="702"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Z2B-Oh-k7P">
@@ -184,6 +184,31 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MGQ-2J-yfk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="852.67175572519079" y="3.5211267605633805"/>
+        </scene>
+        <!--Product Editor View Controller-->
+        <scene sceneID="Yo2-Kp-9pC">
+            <objects>
+                <collectionViewController storyboardIdentifier="ProductEditorViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Vxw-ZT-QI9" customClass="ProductEditorViewController" customModule="OpenMarket" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="bah-ct-z9h">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lWL-dK-tsi">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="Vxw-ZT-QI9" id="TyD-Ri-rgK"/>
+                            <outlet property="delegate" destination="Vxw-ZT-QI9" id="bcr-K1-kN8"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IzY-wP-glU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2677" y="4"/>
         </scene>
     </scenes>
     <resources>

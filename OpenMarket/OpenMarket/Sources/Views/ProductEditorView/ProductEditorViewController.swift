@@ -17,7 +17,8 @@ final class ProductEditorViewController: UICollectionViewController {
 
     // MARK: View Lifecycle
 
-    init(product: Product,
+    init(coder: NSCoder,
+         product: Product,
          editMode: EditMode,
          openMarketAPIClient: OpenMarketAPIClient = OpenMarketAPIClient(),
          imageLoader: ImageLoader = ImageLoader(),
@@ -27,11 +28,7 @@ final class ProductEditorViewController: UICollectionViewController {
         self.openMarketAPIClient = openMarketAPIClient
         self.imageLoader = imageLoader
         self.onChange = onChange
-
-        let configuration = UICollectionLayoutListConfiguration(appearance: .plain)
-        let collectionViewLayout = UICollectionViewCompositionalLayout.list(using: configuration)
-        super.init(collectionViewLayout: collectionViewLayout)
-        view.backgroundColor = .systemBackground
+        super.init(coder: coder)!
     }
 
     required init?(coder: NSCoder) {
@@ -40,6 +37,7 @@ final class ProductEditorViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureCollectionView()
         configureNavigationItem()
         configureDataSource()
         updateSnapshot()
@@ -50,6 +48,12 @@ final class ProductEditorViewController: UICollectionViewController {
 // MARK: - Methods
 
 extension ProductEditorViewController {
+    private func configureCollectionView() {
+        let configuration = UICollectionLayoutListConfiguration(appearance: .plain)
+        let layout = UICollectionViewCompositionalLayout.list(using: configuration)
+        collectionView.collectionViewLayout = layout
+    }
+
     private func configureNavigationItem() {
         navigationItem.title = String(describing: editMode)
         navigationItem.leftBarButtonItem = UIBarButtonItem(
