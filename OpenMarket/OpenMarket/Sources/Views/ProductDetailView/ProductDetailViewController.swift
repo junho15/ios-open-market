@@ -76,13 +76,9 @@ extension ProductDetailViewController {
         } else {
             group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
         }
-        let spacing = CGFloat(10)
-        group.interItemSpacing = .fixed(spacing)
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .paging
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
-        section.interGroupSpacing = spacing
         section.visibleItemsInvalidationHandler = { [weak self] visibleItems, _, _ in
             guard let self,
                   let index = visibleItems.last?.indexPath.item,
@@ -119,7 +115,6 @@ extension ProductDetailViewController {
         let dispatchGroup = DispatchGroup()
 
         validURLs.forEach { url in
-            print(url.description)
             dispatchGroup.enter()
             imageLoader.loadImage(from: url) { result in
                 DispatchQueue.main.async {
