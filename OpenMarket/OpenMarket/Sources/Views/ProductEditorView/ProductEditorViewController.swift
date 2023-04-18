@@ -2,14 +2,14 @@ import UIKit
 import Photos
 import PhotosUI
 
-final class ProductEditorViewController: UICollectionViewController, ProductEditable {
+final class ProductEditorViewController: UICollectionViewController {
 
     // MARK: Properties
 
-    let editMode: EditMode
-    let openMarketAPIClient: OpenMarketAPIClient
-    let imageLoader: ImageLoader
-    let onChange: (Product?) -> Void
+    private let editMode: EditMode
+    private let openMarketAPIClient: OpenMarketAPIClient
+    private let imageLoader: ImageLoader
+    private let onChange: (Product?) -> Void
     private var dataSource: DataSource!
     private var product: Product
     private var images: [UIImage] = []
