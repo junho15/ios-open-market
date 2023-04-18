@@ -260,6 +260,36 @@ extension ProductListViewController {
             loadProducts(pageNumber: nextPageNumber, productsPerPage: Constants.productsPerPage)
         }
     }
+
+    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        guard let dataSource = collectionView.dataSource as? DataSource,
+              let productID = dataSource.itemIdentifier(for: indexPath) else {
+            return false
+        }
+        openMarketAPIClient.fetchProductDetail(productID: productID) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let product):
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let productDetailViewController = storyboard.instantiateViewController(
+                    identifier: "ProductDetailViewController", creator: { coder in
+                        return ProductDetailViewController(coder: coder, product: product) { [weak self] product in
+                            guard let self,
+                                  let product else { return}
+                            DispatchQueue.main.async {
+                                self.updateOrInsertProducts([product])
+                                self.updateSnapshot(reloading: [product.id])
+                            }
+                        }
+                    })
+                navigationController?.pushViewController(productDetailViewController, animated: true)
+            case .failure(let error):
+                let alertPresenter = AlertPresenter()
+                alertPresenter.showAlert(title: error.localizedDescription, message: nil, in: self)
+            }
+        }
+        return false
+    }
 }
 
 // MARK: - Constants
