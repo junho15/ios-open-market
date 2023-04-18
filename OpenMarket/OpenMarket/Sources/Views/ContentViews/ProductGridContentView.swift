@@ -29,9 +29,13 @@ final class ProductGridContentView: UIView, UIContentView {
         priceLabel.attributedText = ProductAttributedStringMaker.twoLinePrice(
             currency: configuration.currency,
             price: configuration.price ?? 0,
-            bargainPrice: configuration.bargainPrice ?? 0
+            bargainPrice: configuration.bargainPrice ?? 0,
+            font: UIFont.preferredFont(forTextStyle: .caption2)
         ).attributedString
-        stockLabel.attributedText = ProductAttributedStringMaker.stock(stock: configuration.stock ?? 0).attributedString
+        stockLabel.attributedText = ProductAttributedStringMaker.stock(
+            stock: configuration.stock ?? 0,
+            font: UIFont.preferredFont(forTextStyle: .caption2)
+        ).attributedString
     }
 
     private func configureSubviews() {

@@ -157,7 +157,8 @@ extension ProductListViewController {
         let priceAttributedText = ProductAttributedStringMaker.oneLinePrice(
             currency: product.currency,
             price: product.price ?? 0,
-            bargainPrice: product.bargainPrice ?? 0
+            bargainPrice: product.bargainPrice ?? 0,
+            font: UIFont.preferredFont(forTextStyle: .caption2)
         ).attributedString
         contentConfiguration.secondaryAttributedText = priceAttributedText
         contentConfiguration.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .caption2)

@@ -1,36 +1,38 @@
 import UIKit
 
 enum ProductAttributedStringMaker {
-    case oneLinePrice(currency: Currency, price: Double, bargainPrice: Double)
-    case twoLinePrice(currency: Currency, price: Double, bargainPrice: Double)
-    case stock(stock: Int)
+    case oneLinePrice(currency: Currency, price: Double, bargainPrice: Double, font: UIFont)
+    case twoLinePrice(currency: Currency, price: Double, bargainPrice: Double, font: UIFont)
+    case stock(stock: Int, font: UIFont)
 
     var attributedString: NSAttributedString {
         switch self {
-        case .oneLinePrice(let currency, let price, let bargainPrice):
+        case .oneLinePrice(let currency, let price, let bargainPrice, let font):
             return attributedPriceString(currency: currency,
                                          price: price,
                                          bargainPrice: bargainPrice,
+                                         font: font,
                                          needNewLineCharacters: true)
-        case .twoLinePrice(let currency, let price, let bargainPrice):
+        case .twoLinePrice(let currency, let price, let bargainPrice, let font):
             return attributedPriceString(currency: currency,
                                          price: price,
                                          bargainPrice: bargainPrice,
+                                         font: font,
                                          needNewLineCharacters: false)
-        case .stock(let stock):
-            return attributedStockString(stock: stock)
+        case .stock(let stock, let font):
+            return attributedStockString(stock: stock, font: font)
         }
     }
 
     private func attributedPriceString(currency: Currency,
                                        price: Double,
                                        bargainPrice: Double,
+                                       font: UIFont,
                                        needNewLineCharacters: Bool = true) -> NSAttributedString {
         guard let formattedPrice = NumberFormatter.decimalString(price),
               let formattedBargainPrice = NumberFormatter.decimalString(bargainPrice) else {
             fatalError("Error: Failed to format")
         }
-        let font = UIFont.preferredFont(forTextStyle: .caption2)
         let notDiscounted = price == bargainPrice
         if notDiscounted {
             return NSMutableAttributedString(string: "\(currency.rawValue) \(formattedPrice)",
@@ -52,8 +54,7 @@ enum ProductAttributedStringMaker {
         }
     }
 
-    private func attributedStockString(stock: Int) -> NSAttributedString {
-        let font = UIFont.preferredFont(forTextStyle: .caption2)
+    private func attributedStockString(stock: Int, font: UIFont) -> NSAttributedString {
         let inStock = stock > 0
         if inStock {
             let format = NSLocalizedString("Stock : %d", comment: "Stock description")
