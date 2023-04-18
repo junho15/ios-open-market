@@ -44,6 +44,22 @@ final class ProductListViewController: UICollectionViewController {
         guard let layoutStyle = LayoutStyle(rawValue: segmentedControl.selectedSegmentIndex) else { return }
         self.layoutStyle = layoutStyle
     }
+
+    @IBAction func addBarButtonItemTapped(_ sender: UIBarButtonItem) {
+        let newProduct = Product()
+        let viewController = ProductEditorViewController(product: newProduct, editMode: .add) { [weak self] _ in
+            guard let self else { return }
+            dismiss(animated: true)
+            DispatchQueue.main.async {
+                self.clearProducts()
+                self.loadProducts(pageNumber: self.nextPageNumber,
+                                  productsPerPage: Constants.productsPerPage,
+                                  withActivityIndicator: true)
+            }
+        }
+        let navigationController = UINavigationController(rootViewController: viewController)
+        present(navigationController, animated: true)
+    }
 }
 
 // MARK: - Methods
@@ -138,9 +154,11 @@ extension ProductListViewController {
         var contentConfiguration = cell.defaultContentConfiguration()
         contentConfiguration.text = product.name
         contentConfiguration.textProperties.font = UIFont.preferredFont(forTextStyle: .body)
-        let priceAttributedText = ProductAttributedStringMaker.oneLinePrice(currency: product.currency,
-                                                             price: product.price ?? 0,
-                                                             bargainPrice: product.bargainPrice ?? 0).attributedString
+        let priceAttributedText = ProductAttributedStringMaker.oneLinePrice(
+            currency: product.currency,
+            price: product.price ?? 0,
+            bargainPrice: product.bargainPrice ?? 0
+        ).attributedString
         contentConfiguration.secondaryAttributedText = priceAttributedText
         contentConfiguration.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .caption2)
 
@@ -213,16 +231,15 @@ extension ProductListViewController {
     }
 
     @discardableResult
-    private func updateOrInsertProducts(_ newProducts: [Product]) -> (updated: [Product.ID],
-                                                                      inserted: [Product.ID]) {
+    private func updateOrInsertProducts(_ products: [Product]) -> (updated: [Product.ID], inserted: [Product.ID]) {
         var updatedProductIDs = [Product.ID]()
         var insertedProductIDs = [Product.ID]()
-        newProducts.forEach { product in
-            if let index = products.firstIndex(where: { $0.id == product.id }) {
-                products[index] = product
+        products.forEach { product in
+            if let index = self.products.firstIndex(where: { $0.id == product.id }) {
+                self.products[index] = product
                 updatedProductIDs.append(product.id)
             } else {
-                products.append(product)
+                self.products.append(product)
                 insertedProductIDs.append(product.id)
             }
         }

@@ -41,6 +41,11 @@
                                 <action selector="segmentedControlValueChanged:" destination="s9y-uv-pMx" eventType="valueChanged" id="dDQ-QO-nP3"/>
                             </connections>
                         </segmentedControl>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="GfG-hY-ZrJ">
+                            <connections>
+                                <action selector="addBarButtonItemTapped:" destination="s9y-uv-pMx" id="uck-rD-FMD"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicatorView" destination="l5M-od-kqA" id="nlt-eJ-oAC"/>
