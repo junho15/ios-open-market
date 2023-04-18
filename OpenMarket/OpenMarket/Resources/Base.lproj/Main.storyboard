@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -56,6 +57,113 @@
             </objects>
             <point key="canvasLocation" x="1779.3893129770991" y="3.5211267605633805"/>
         </scene>
+        <!--Product Detail View Controller-->
+        <scene sceneID="fd2-zY-4gB">
+            <objects>
+                <viewController storyboardIdentifier="ProductDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kEU-Uu-zDT" customClass="ProductDetailViewController" customModule="OpenMarket" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yYX-nS-HR9">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="52A-5h-TAN">
+                                <rect key="frame" x="10" y="69" width="373" height="773"/>
+                                <subviews>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0If-Eg-5HF">
+                                        <rect key="frame" x="0.0" y="0.0" width="373" height="309.33333333333331"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5ja-21-3nG">
+                                            <size key="itemSize" width="128" height="128"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells/>
+                                    </collectionView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xmf-x8-b3N">
+                                        <rect key="frame" x="0.0" y="319.33333333333331" width="373" height="50"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XGz-9p-tKf">
+                                        <rect key="frame" x="0.0" y="379.33333333333331" width="373" height="48.666666666666686"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nsw-hB-dSl">
+                                                <rect key="frame" x="0.0" y="0.0" width="363" height="0.0"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VBC-Kr-zAj">
+                                                <rect key="frame" x="373" y="0.0" width="0.0" height="10"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uS0-gD-rTy">
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZFm-45-Dvt">
+                                                        <rect key="frame" x="0.0" y="10" width="0.0" height="0.0"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TsQ-7R-1SP">
+                                        <rect key="frame" x="0.0" y="438" width="373" height="335"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="0If-Eg-5HF" firstAttribute="height" secondItem="52A-5h-TAN" secondAttribute="height" multiplier="0.4" id="BEK-0J-l8v"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="I3M-uV-hZF"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="52A-5h-TAN" secondAttribute="bottom" constant="10" id="2pz-IP-E6p"/>
+                            <constraint firstItem="52A-5h-TAN" firstAttribute="top" secondItem="I3M-uV-hZF" secondAttribute="top" constant="10" id="7fA-QZ-V7c"/>
+                            <constraint firstItem="I3M-uV-hZF" firstAttribute="trailing" secondItem="52A-5h-TAN" secondAttribute="trailing" constant="10" id="S6J-vA-ijs"/>
+                            <constraint firstItem="52A-5h-TAN" firstAttribute="leading" secondItem="I3M-uV-hZF" secondAttribute="leading" constant="10" id="ToF-WT-viF"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="hUc-a2-96r"/>
+                        <barButtonItem systemItem="trash" id="EFv-hp-0pM">
+                            <connections>
+                                <action selector="deleteBarButtonItemTapped:" destination="kEU-Uu-zDT" id="CBr-HP-G9A"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Xcb-P7-Vhg"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" id="cZ5-Dv-p7o">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="ktT-Wy-n2O">
+                            <connections>
+                                <action selector="editBarButtonItemTapped:" destination="kEU-Uu-zDT" id="WZv-78-Y8s"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="collectionView" destination="0If-Eg-5HF" id="MkM-6g-UNk"/>
+                        <outlet property="descriptionTextView" destination="TsQ-7R-1SP" id="TUr-hO-SXM"/>
+                        <outlet property="nameLabel" destination="nsw-hB-dSl" id="u83-ys-SHI"/>
+                        <outlet property="pageIndicatorLabel" destination="Xmf-x8-b3N" id="Yei-8j-cJ2"/>
+                        <outlet property="priceLabel" destination="ZFm-45-Dvt" id="LS9-nr-SnI"/>
+                        <outlet property="stockLabel" destination="uS0-gD-rTy" id="J84-Qo-cIl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4y2-rZ-4MJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2662" y="4"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Z2B-Oh-k7P">
             <objects>
@@ -66,6 +174,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3SW-z9-4I8">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="s9y-uv-pMx" kind="relationship" relationship="rootViewController" id="ld8-MG-XWd"/>
                     </connections>
@@ -76,6 +187,9 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

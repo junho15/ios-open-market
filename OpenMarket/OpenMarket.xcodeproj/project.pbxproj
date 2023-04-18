@@ -45,6 +45,8 @@
 		EB91C38929ED555900557197 /* ProductValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB91C38829ED555900557197 /* ProductValidationError.swift */; };
 		EB91C38B29ED560800557197 /* ProductEditable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB91C38A29ED560800557197 /* ProductEditable.swift */; };
 		EB91C38D29ED783D00557197 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB91C38C29ED783D00557197 /* UIImage.swift */; };
+		EB91C39029EE672C00557197 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB91C38F29EE672C00557197 /* ProductDetailViewController.swift */; };
+		EB92835C29EE83CF00B5883F /* ProductDetailViewControlle+Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB92835B29EE83CF00B5883F /* ProductDetailViewControlle+Section.swift */; };
 		EBAB055629E192B50045528E /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAB055529E192B50045528E /* Secrets.swift */; };
 		EBAB055829E19E610045528E /* JSONEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAB055729E19E610045528E /* JSONEncoder.swift */; };
 		EBAB055A29E1A0A70045528E /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAB055929E1A0A70045528E /* Data.swift */; };
@@ -114,6 +116,8 @@
 		EB91C38829ED555900557197 /* ProductValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductValidationError.swift; sourceTree = "<group>"; };
 		EB91C38A29ED560800557197 /* ProductEditable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEditable.swift; sourceTree = "<group>"; };
 		EB91C38C29ED783D00557197 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		EB91C38F29EE672C00557197 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
+		EB92835B29EE83CF00B5883F /* ProductDetailViewControlle+Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductDetailViewControlle+Section.swift"; sourceTree = "<group>"; };
 		EBAB055529E192B50045528E /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		EBAB055729E19E610045528E /* JSONEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONEncoder.swift; sourceTree = "<group>"; };
 		EBAB055929E1A0A70045528E /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
@@ -303,6 +307,7 @@
 			children = (
 				EB4FE68E29E653C9001CCF4C /* CustomViews */,
 				EB4FE68129E583B3001CCF4C /* ContentViews */,
+				EB91C38E29EE66FF00557197 /* ProductDetailView */,
 				EB4FE67A29E551CA001CCF4C /* ProductEditorView */,
 				EBDC9A4429DAEEBD007AD736 /* ProductListView */,
 			);
@@ -342,6 +347,15 @@
 				EB40DB1F29DD9646007F29FF /* ImageLoader */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		EB91C38E29EE66FF00557197 /* ProductDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				EB91C38F29EE672C00557197 /* ProductDetailViewController.swift */,
+				EB92835B29EE83CF00B5883F /* ProductDetailViewControlle+Section.swift */,
+			);
+			path = ProductDetailView;
 			sourceTree = "<group>";
 		};
 		EBABE70A29D6C91B008739B1 /* Error */ = {
@@ -489,6 +503,7 @@
 			files = (
 				EB4FE67E29E57C4A001CCF4C /* ProductEditorViewController+Section.swift in Sources */,
 				EB91C38D29ED783D00557197 /* UIImage.swift in Sources */,
+				EB91C39029EE672C00557197 /* ProductDetailViewController.swift in Sources */,
 				EB5567FD29C1BA2700C1469D /* Currency.swift in Sources */,
 				EB75D63B29D5C0F8001B8719 /* Requestable.swift in Sources */,
 				EBAB055829E19E610045528E /* JSONEncoder.swift in Sources */,
@@ -528,6 +543,7 @@
 				EB40DB1D29DD8C95007F29FF /* ProductCellAccessoryMaker.swift in Sources */,
 				EBABE71229D6D2AC008739B1 /* JSONDecoder.swift in Sources */,
 				EB40DB2129DD9AE5007F29FF /* CachedImage.swift in Sources */,
+				EB92835C29EE83CF00B5883F /* ProductDetailViewControlle+Section.swift in Sources */,
 				EB2E5C7C29DC4AB200A036A9 /* ProductAttributedStringMaker.swift in Sources */,
 				C70FB0FD25BEF61C00C9924E /* SceneDelegate.swift in Sources */,
 				EBABE71A29D70C2C008739B1 /* ProductImage.swift in Sources */,
