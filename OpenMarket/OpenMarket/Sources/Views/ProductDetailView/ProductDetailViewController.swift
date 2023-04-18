@@ -4,8 +4,8 @@ class ProductDetailViewController: UIViewController {
 
     // MARK: Properties
 
-    private let onChange: (Product?) -> Void
     private let imageLoader = ImageLoader()
+    private let onChange: (Product?) -> Void
     private var dataSource: DataSource!
     private var product: Product
     private var images: [UIImage] = []
@@ -54,6 +54,21 @@ class ProductDetailViewController: UIViewController {
     // MARK: IBActions
 
     @IBAction func editBarButtonItemTapped(_ sender: UIBarButtonItem) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let productEditorViewController = storyboard.instantiateViewController(
+            identifier: "ProductEditorViewController", creator: { coder in
+                return ProductEditorViewController(coder: coder,
+                                                   product: self.product,
+                                                   editMode: .edit) { [weak self] editedProduct in
+                    guard let self else { return }
+                    if let editedProduct {
+                        product = editedProduct
+                        onChange(editedProduct)
+                    }
+                    navigationController?.popViewController(animated: true)
+                }
+            })
+        navigationController?.pushViewController(productEditorViewController, animated: true)
     }
 
     @IBAction func deleteBarButtonItemTapped(_ sender: UIBarButtonItem) {
@@ -117,15 +132,13 @@ extension ProductDetailViewController {
         validURLs.forEach { url in
             dispatchGroup.enter()
             imageLoader.loadImage(from: url) { result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let image):
-                        loadedImages[url] = image
-                    case .failure(let error):
-                        print(error)
-                    }
-                    dispatchGroup.leave()
+                switch result {
+                case .success(let image):
+                    loadedImages[url] = image
+                case .failure(let error):
+                    print(error)
                 }
+                dispatchGroup.leave()
             }
         }
 

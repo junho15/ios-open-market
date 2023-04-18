@@ -53,12 +53,10 @@ final class ProductListViewController: UICollectionViewController {
                 return ProductEditorViewController(coder: coder, product: newProduct, editMode: .add) { [weak self] _ in
                     guard let self else { return }
                     dismiss(animated: true)
-                    DispatchQueue.main.async {
                         self.clearProducts()
                         self.loadProducts(pageNumber: self.nextPageNumber,
                                           productsPerPage: Constants.productsPerPage,
                                           withActivityIndicator: true)
-                    }
                 }
             })
         let navigationController = UINavigationController(rootViewController: productDetailViewController)
@@ -280,10 +278,8 @@ extension ProductListViewController {
                         return ProductDetailViewController(coder: coder, product: product) { [weak self] product in
                             guard let self,
                                   let product else { return}
-                            DispatchQueue.main.async {
                                 self.updateOrInsertProducts([product])
                                 self.updateSnapshot(reloading: [product.id])
-                            }
                         }
                     })
                 navigationController?.pushViewController(productDetailViewController, animated: true)

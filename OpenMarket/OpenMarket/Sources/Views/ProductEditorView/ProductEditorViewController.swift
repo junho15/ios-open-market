@@ -60,7 +60,7 @@ extension ProductEditorViewController {
             systemItem: .cancel,
             primaryAction: UIAction(handler: { [weak self] _ in
                 guard let self else { return }
-                dismiss(animated: true)
+                onChange(nil)
             }))
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             systemItem: .done,
@@ -151,15 +151,13 @@ extension ProductEditorViewController {
         validURLs.forEach { url in
             dispatchGroup.enter()
             imageLoader.loadImage(from: url) { result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let image):
-                        loadedImages[url] = image
-                    case .failure(let error):
-                        print(error)
-                    }
-                    dispatchGroup.leave()
+                switch result {
+                case .success(let image):
+                    loadedImages[url] = image
+                case .failure(let error):
+                    print(error)
                 }
+                dispatchGroup.leave()
             }
         }
 
