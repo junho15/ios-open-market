@@ -248,6 +248,10 @@ extension ProductListViewController {
         }
         return (updatedProductIDs, insertedProductIDs)
     }
+
+    private func deleteProduct(_ id: Product.ID) {
+        products.removeAll(where: { $0.id == id })
+    }
 }
 
 // MARK: - UICollectionViewDelegate
@@ -275,11 +279,17 @@ extension ProductListViewController {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let productDetailViewController = storyboard.instantiateViewController(
                     identifier: "ProductDetailViewController", creator: { coder in
-                        return ProductDetailViewController(coder: coder, product: product) { [weak self] product in
-                            guard let self,
-                                  let product else { return}
-                                self.updateOrInsertProducts([product])
-                                self.updateSnapshot(reloading: [product.id])
+                        return ProductDetailViewController(coder: coder,
+                                                           product: product) { [weak self] updatedProduct in
+                            guard let self else { return}
+                            if let updatedProduct {
+                                updateOrInsertProducts([updatedProduct])
+                                updateSnapshot(reloading: [updatedProduct.id])
+                            } else {
+                                deleteProduct(productID)
+                                updateSnapshot()
+                                navigationController?.popViewController(animated: true)
+                            }
                         }
                     })
                 navigationController?.pushViewController(productDetailViewController, animated: true)

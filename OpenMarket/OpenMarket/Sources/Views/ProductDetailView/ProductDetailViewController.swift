@@ -4,7 +4,8 @@ class ProductDetailViewController: UIViewController {
 
     // MARK: Properties
 
-    private let imageLoader = ImageLoader()
+    private let openMarketAPIClient: OpenMarketAPIClient
+    private let imageLoader: ImageLoader
     private let onChange: (Product?) -> Void
     private var dataSource: DataSource!
     private var product: Product
@@ -22,8 +23,14 @@ class ProductDetailViewController: UIViewController {
 
     // MARK: View Lifecycle
 
-    init(coder: NSCoder, product: Product, onChange: @escaping (Product?) -> Void) {
+    init(coder: NSCoder,
+         product: Product,
+         openMarketAPIClient: OpenMarketAPIClient = OpenMarketAPIClient(),
+         imageLoader: ImageLoader = ImageLoader(),
+         onChange: @escaping (Product?) -> Void) {
         self.product = product
+        self.openMarketAPIClient = openMarketAPIClient
+        self.imageLoader = imageLoader
         self.onChange = onChange
         super.init(coder: coder)!
     }
@@ -72,6 +79,31 @@ class ProductDetailViewController: UIViewController {
     }
 
     @IBAction func deleteBarButtonItemTapped(_ sender: UIBarButtonItem) {
+        let title = NSLocalizedString("Enter Password", comment: "Enter Password Alert Title")
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        alertController.addTextField(configurationHandler: { textField in
+            textField.isSecureTextEntry = true
+        })
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK Alert Action"),
+                                     style: .default) { [weak self, weak alertController] _ in
+            guard let self,
+                  let alertController,
+                  let password = alertController.textFields?.first?.text else { return }
+            openMarketAPIClient.deleteProduct(productID: product.id, password: password) { [weak self] result in
+                guard let self else { return }
+                switch result {
+                case .success:
+                    onChange(nil)
+                case .failure(let error):
+                    let alertPresenter = AlertPresenter()
+                    alertPresenter.showAlert(title: error.localizedDescription, message: nil, in: self)
+                }
+            }
+        }
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel Alert Action"),
+                                         style: .cancel)
+        [okAction, cancelAction].forEach(alertController.addAction)
+        present(alertController, animated: true)
     }
 }
 
