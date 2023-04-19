@@ -6,7 +6,7 @@ enum OpenMarketRequest: Requestable {
     case fetchProductDetail(productID: Product.ID)
     case createProduct(identifier: String, product: Product, images: [Data], boundary: String = UUID().uuidString)
     case updateProduct(identifier: String, product: Product)
-    case fetchProductDeleteURI(identifier: String, productID: Product.ID)
+    case fetchProductDeleteURI(identifier: String, password: String, productID: Product.ID)
     case deleteProduct(identifier: String, URI: String)
 
     var baseURL: URL {
@@ -25,7 +25,7 @@ enum OpenMarketRequest: Requestable {
             return "/api/products"
         case .updateProduct(_, let product):
             return "/api/products/\(product.id)"
-        case .fetchProductDeleteURI(_, let productID):
+        case .fetchProductDeleteURI(_, _, let productID):
             return "/api/products/\(productID)/archived"
         case .deleteProduct(_, let URI):
             return URI
@@ -65,7 +65,7 @@ enum OpenMarketRequest: Requestable {
         case .updateProduct(let identifier, _):
             return ["identifier": identifier,
                     "Content-Type": "application/json"]
-        case .fetchProductDeleteURI(let identifier, _):
+        case .fetchProductDeleteURI(let identifier, _, _):
             return ["identifier": identifier,
                     "Content-Type": "application/json"]
         case .deleteProduct(let identifier, _):
@@ -85,8 +85,9 @@ enum OpenMarketRequest: Requestable {
             return createHttpBodyToCreateProduct(product: product, images: images, boundary: boundary)
         case .updateProduct(_, let product):
             return createHttpBodyToUpdateProduct(product: product)
-        case .fetchProductDeleteURI:
-            return Secrets.passwordJSONData
+        case .fetchProductDeleteURI(_, let password, _):
+            let secret = Secret(password: password)
+            return try? JSONEncoder().encode(secret)
         case .deleteProduct:
             return nil
         }

@@ -47,6 +47,7 @@
 		EB91C38D29ED783D00557197 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB91C38C29ED783D00557197 /* UIImage.swift */; };
 		EB91C39029EE672C00557197 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB91C38F29EE672C00557197 /* ProductDetailViewController.swift */; };
 		EB92835C29EE83CF00B5883F /* ProductDetailViewControlle+Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB92835B29EE83CF00B5883F /* ProductDetailViewControlle+Section.swift */; };
+		EB92836029EF889D00B5883F /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB92835F29EF889D00B5883F /* Secret.swift */; };
 		EBAB055629E192B50045528E /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAB055529E192B50045528E /* Secrets.swift */; };
 		EBAB055829E19E610045528E /* JSONEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAB055729E19E610045528E /* JSONEncoder.swift */; };
 		EBAB055A29E1A0A70045528E /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAB055929E1A0A70045528E /* Data.swift */; };
@@ -118,6 +119,7 @@
 		EB91C38C29ED783D00557197 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		EB91C38F29EE672C00557197 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
 		EB92835B29EE83CF00B5883F /* ProductDetailViewControlle+Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductDetailViewControlle+Section.swift"; sourceTree = "<group>"; };
+		EB92835F29EF889D00B5883F /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		EBAB055529E192B50045528E /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		EBAB055729E19E610045528E /* JSONEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONEncoder.swift; sourceTree = "<group>"; };
 		EBAB055929E1A0A70045528E /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				EBAB055529E192B50045528E /* Secrets.swift */,
+				EB92835F29EF889D00B5883F /* Secret.swift */,
 				EB75D63829D5C08C001B8719 /* HttpMethod.swift */,
 				EB75D63A29D5C0F8001B8719 /* Requestable.swift */,
 				EB75D63C29D5C4F7001B8719 /* OpenMarketRequest.swift */,
@@ -529,6 +532,7 @@
 				EB75D63D29D5C4F7001B8719 /* OpenMarketRequest.swift in Sources */,
 				EBABE70729D67F2F008739B1 /* OpenMarketError.swift in Sources */,
 				EBAB055A29E1A0A70045528E /* Data.swift in Sources */,
+				EB92836029EF889D00B5883F /* Secret.swift in Sources */,
 				EB4FE69029E65452001CCF4C /* NumberTextField.swift in Sources */,
 				EB4FE67C29E55265001CCF4C /* ProductEditorViewController.swift in Sources */,
 				EB4FE68D29E5914F001CCF4C /* ImageContentView.swift in Sources */,

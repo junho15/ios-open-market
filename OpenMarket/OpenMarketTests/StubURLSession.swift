@@ -7,7 +7,7 @@ class StubURLSession: URLSessionProtocol {
     var response: URLResponse?
     var delay: TimeInterval = 0.5
 
-    func execute(request: OpenMarket.Requestable, completion: @escaping (Result<Data, Error>) -> Void) {
+    func execute(request: OpenMarket.Requestable, completion: @escaping (Result<Data, OpenMarketError>) -> Void) {
         guard request.urlRequest != nil else {
             completion(.failure(OpenMarketError.invalidRequest))
             return
@@ -32,7 +32,7 @@ class StubURLSession: URLSessionProtocol {
         }
     }
 
-    func execute(url: URL, completion: @escaping (Result<Data, Error>) -> Void) {
+    func execute(url: URL, completion: @escaping (Result<Data, OpenMarketError>) -> Void) {
         DispatchQueue.global().asyncAfter(deadline: .now() + delay) { [weak self] in
             guard let self else { return }
             if let error {

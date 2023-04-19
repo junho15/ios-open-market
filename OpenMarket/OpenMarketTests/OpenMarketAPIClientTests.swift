@@ -67,8 +67,7 @@ extension OpenMarketAPIClientTests {
             case .success:
                 XCTFail("Should return failure")
             case .failure(let error):
-                if let error = error as? OpenMarketError,
-                   case .badStatus = error {
+                if case .badStatus = error {
                     XCTAssert(true)
                 } else {
                     XCTFail("Should return OpenMarketError.badStatus")
@@ -133,8 +132,7 @@ extension OpenMarketAPIClientTests {
             case .success:
                 XCTFail("Should return failure")
             case .failure(let error):
-                if let error = error as? OpenMarketError,
-                   case .badStatus = error {
+                if case .badStatus = error {
                     XCTAssert(true)
                 } else {
                     XCTFail("Should return OpenMarketError.badStatus")
@@ -199,8 +197,7 @@ extension OpenMarketAPIClientTests {
             case .success:
                 XCTFail("Should return failure")
             case .failure(let error):
-                if let error = error as? OpenMarketError,
-                   case .badStatus = error {
+                if case .badStatus = error {
                     XCTAssert(true)
                 } else {
                     XCTFail("Should return OpenMarketError.badStatus")
@@ -268,8 +265,7 @@ extension OpenMarketAPIClientTests {
             case .success:
                 XCTFail("Should return failure")
             case .failure(let error):
-                if let error = error as? OpenMarketError,
-                   case .badStatus = error {
+                if case .badStatus = error {
                     XCTAssert(true)
                 } else {
                     XCTFail("Should return OpenMarketError.badStatus")
@@ -337,8 +333,7 @@ extension OpenMarketAPIClientTests {
             case .success:
                 XCTFail("Should return failure")
             case .failure(let error):
-                if let error = error as? OpenMarketError,
-                   case .badStatus = error {
+                if case .badStatus = error {
                     XCTAssert(true)
                 } else {
                     XCTFail("Should return OpenMarketError.badStatus")
@@ -364,7 +359,7 @@ extension OpenMarketAPIClientTests {
         let expectation = self.expectation(description: "deleteProduct Complete")
 
         // when
-        sut.deleteProduct(productID: 1944) { result in
+        sut.deleteProduct(productID: 1944, password: Secrets.password) { result in
             // then
             switch result {
             case .success:
@@ -391,14 +386,13 @@ extension OpenMarketAPIClientTests {
         let expectation = self.expectation(description: "deleteProduct Complete")
 
         // when
-        sut.deleteProduct(productID: 1944) { result in
+        sut.deleteProduct(productID: 1944, password: Secrets.password) { result in
             // then
             switch result {
             case .success:
                 XCTFail("Should return failure")
             case .failure(let error):
-                if let error = error as? OpenMarketError,
-                   case .badStatus = error {
+                if case .badStatus = error {
                     XCTAssert(true)
                 } else {
                     XCTFail("Should return OpenMarketError.badStatus")

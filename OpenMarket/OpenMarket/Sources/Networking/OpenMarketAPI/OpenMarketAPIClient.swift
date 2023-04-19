@@ -125,8 +125,11 @@ final class OpenMarketAPIClient {
         }
     }
 
-    func deleteProduct(productID: Product.ID, completion: @escaping (Result<Void, OpenMarketError>) -> Void) {
+    func deleteProduct(productID: Product.ID,
+                       password: String,
+                       completion: @escaping (Result<Void, OpenMarketError>) -> Void) {
         let fetchProductDeleteURIRequest = OpenMarketRequest.fetchProductDeleteURI(identifier: Secrets.identifier,
+                                                                                   password: password,
                                                                                    productID: productID)
         session.execute(request: fetchProductDeleteURIRequest) { [weak self] result in
             guard let self else { return }
