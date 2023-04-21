@@ -17,7 +17,8 @@ enum OpenMarketError: Error {
         case .invalidRequest:
             return NSLocalizedString("Invalid Request", comment: "Invalid Request")
         case .networkError(let error):
-            return NSLocalizedString("Network Error: \(error.localizedDescription)", comment: "Network Error")
+            return String(format: NSLocalizedString("Network Error: %@", comment: "Network Error"),
+                          error.localizedDescription)
         case .badStatus:
             return NSLocalizedString("Bad Status", comment: "Bad Status")
         case .emptyData:
