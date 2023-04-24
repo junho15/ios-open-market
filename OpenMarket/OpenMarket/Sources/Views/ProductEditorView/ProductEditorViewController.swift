@@ -321,23 +321,28 @@ extension ProductEditorViewController: PHPickerViewControllerDelegate {
                 forTypeIdentifier: "public.image"
             ) { [weak self] imageData, error in
                 guard let self else { return }
-                DispatchQueue.main.async { [weak self] in
+                Task { [weak self] in
                     guard let self else { return }
                     if let error {
-                        let alertPresenter = AlertPresenter()
-                        alertPresenter.showAlert(title: error.localizedDescription, message: nil, in: self)
+                        await MainActor.run {
+                            let alertPresenter = AlertPresenter()
+                            alertPresenter.showAlert(title: error.localizedDescription, message: nil, in: self)
+                        }
                         return
                     }
                     if let imageData,
                        let image = UIImage(data: imageData) {
-                        isPickingImage = true
-                        image.limitSize(maxSizeInKb: 300) { [weak self] limitedImage in
-                            guard let self else { return }
-                            isPickingImage = false
-                            guard let limitedImage else { return }
-                            self.images.append(limitedImage)
-                            self.updateSnapshot()
+                        await MainActor.run { [weak self] in
+                            self?.isPickingImage = true
                         }
+                        let limitedImage = await image.limitSize(maxSizeInKb: 300)
+                        await MainActor.run { [weak self] in
+                            self?.isPickingImage = false
+                            guard let limitedImage else { return }
+                            self?.images.append(limitedImage)
+                            self?.updateSnapshot()
+                        }
+
                     }
                 }
             }

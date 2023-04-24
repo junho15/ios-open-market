@@ -1,33 +1,28 @@
 import UIKit
 
 extension UIImage {
-    func limitSize(maxSizeInKb: Int, completion: @escaping (UIImage?) -> Void) {
-        DispatchQueue.global().async {
-            let maxSizeInBytes = maxSizeInKb * 1024
-            let step = CGFloat(0.05)
+    func limitSize(maxSizeInKb: Int) async -> UIImage? {
+        let maxSizeInBytes = maxSizeInKb * 1024
+        let step = CGFloat(0.05)
 
-            guard let resizedImage = self.resized(targetSize: CGSize(width: 500, height: 500)) else {
-                completion(nil)
-                return
-            }
+        guard let resizedImage = self.resized(targetSize: CGSize(width: 500, height: 500)) else {
+            return nil
+        }
 
-            var compressionQuality = CGFloat(0.8)
-            var imageData = resizedImage.jpegData(compressionQuality: compressionQuality)
+        var compressionQuality = CGFloat(0.8)
+        var imageData = resizedImage.jpegData(compressionQuality: compressionQuality)
 
-            while let data = imageData,
-                  data.count > maxSizeInBytes,
-                  compressionQuality > step {
-                compressionQuality -= step
-                imageData = resizedImage.jpegData(compressionQuality: compressionQuality)
-            }
+        while let data = imageData,
+              data.count > maxSizeInBytes,
+              compressionQuality > step {
+            compressionQuality -= step
+            imageData = resizedImage.jpegData(compressionQuality: compressionQuality)
+        }
 
-            DispatchQueue.main.async {
-                if let imageData {
-                    completion(UIImage(data: imageData))
-                } else {
-                    completion(nil)
-                }
-            }
+        if let imageData {
+            return UIImage(data: imageData)
+        } else {
+            return nil
         }
     }
 
