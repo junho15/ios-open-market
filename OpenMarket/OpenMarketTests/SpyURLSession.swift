@@ -13,14 +13,4 @@ final class SpyURLSession: StubURLSession {
         executeCallCount += 1
         return try await super.execute(url: url)
     }
-
-    override func execute(request: Requestable, completion: @escaping (Result<Data, OpenMarketError>) -> Void) {
-        executeCallCount += 1
-        super.execute(request: request, completion: completion)
-    }
-
-    override func execute(url: URL, completion: @escaping (Result<Data, OpenMarketError>) -> Void) {
-        executeCallCount += 1
-        super.execute(url: url, completion: completion)
-    }
 }
