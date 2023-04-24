@@ -46,12 +46,12 @@ final class ProductGridContentView: UIView, UIContentView {
         priceLabel.numberOfLines = 0
 
         [thumbnailImageView, nameLabel, priceLabel, stockLabel].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
             stackView.addArrangedSubview($0)
         }
 
         stackView.axis = .vertical
         stackView.alignment = .center
+        stackView.spacing = 5
         stackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stackView)
 

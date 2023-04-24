@@ -75,9 +75,8 @@ extension ProductListViewController {
 
     private func configureCollectionViewLayoutStyle(_ layoutStyle: LayoutStyle) {
         let layout = layoutStyle.layout
-        collectionView.collectionViewLayout = layout
+        collectionView.setCollectionViewLayout(layout, animated: false)
         collectionView.collectionViewLayout.invalidateLayout()
-        collectionView.reloadData()
     }
 
     private func configureDataSource() {
@@ -165,7 +164,7 @@ extension ProductListViewController {
         contentConfiguration.secondaryAttributedText = priceAttributedText
         contentConfiguration.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .caption2)
 
-        contentConfiguration.image = Constants.placeholderImage
+        contentConfiguration.image = UIImage()
         contentConfiguration.imageProperties.maximumSize = CGSize(width: 100, height: 100)
         contentConfiguration.imageProperties.reservedLayoutSize = CGSize(width: 100, height: 100)
         if let url = URL(string: product.thumbnailURL) {
@@ -200,7 +199,7 @@ extension ProductListViewController {
         contentConfiguration.bargainPrice = product.bargainPrice
         contentConfiguration.stock = product.stock
 
-        contentConfiguration.thumbnailImage = Constants.placeholderImage
+        contentConfiguration.thumbnailImage = nil
         if let url = URL(string: product.thumbnailURL) {
             imageLoader.loadImage(from: url) { [weak self] result in
                 guard let self else { return }
@@ -307,6 +306,5 @@ extension ProductListViewController {
 extension ProductListViewController {
     private enum Constants {
         static let productsPerPage = 50
-        static let placeholderImage = UIImage(systemName: "photo")
     }
 }
