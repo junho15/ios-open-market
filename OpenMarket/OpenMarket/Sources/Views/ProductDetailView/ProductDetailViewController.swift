@@ -78,6 +78,7 @@ class ProductDetailViewController: UIViewController {
         navigationController?.pushViewController(productEditorViewController, animated: true)
     }
 
+    @MainActor
     @IBAction func deleteBarButtonItemTapped(_ sender: UIBarButtonItem) {
         let title = NSLocalizedString("Enter Password", comment: "Enter Password Alert Title")
         let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
@@ -89,12 +90,15 @@ class ProductDetailViewController: UIViewController {
             guard let self,
                   let alertController,
                   let password = alertController.textFields?.first?.text else { return }
-            openMarketAPIClient.deleteProduct(productID: product.id, password: password) { [weak self] result in
+            Task { [weak self] in
                 guard let self else { return }
-                switch result {
-                case .success:
+                do {
+                    _ = try await openMarketAPIClient.deleteProduct(productID: product.id, password: password)
                     onChange(nil)
-                case .failure(let error):
+                } catch let error as OpenMarketError {
+                    let alertPresenter = AlertPresenter()
+                    alertPresenter.showAlert(title: error.localizedDescription, message: nil, in: self)
+                } catch {
                     let alertPresenter = AlertPresenter()
                     alertPresenter.showAlert(title: error.localizedDescription, message: nil, in: self)
                 }
@@ -154,6 +158,7 @@ extension ProductDetailViewController {
         })
     }
 
+    @MainActor
     private func loadImages() {
         guard let productImages = product.images else { return }
         let URLs = productImages.map { $0.url }
@@ -181,10 +186,8 @@ extension ProductDetailViewController {
                     }
                 }
             }
-            await MainActor.run {
-                images = validURLs.compactMap { loadedImages[$0] }
-                updateSnapshot()
-            }
+            images = validURLs.compactMap { loadedImages[$0] }
+            updateSnapshot()
         }
     }
 

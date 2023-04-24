@@ -68,28 +68,35 @@ extension ProductEditorViewController {
         )
     }
 
+    @MainActor
     private func doneButtonActionHandler(action: UIAction) {
         let alertPresenter = AlertPresenter()
         switch validateProduct(product, images: images) {
         case .success:
             switch editMode {
             case .add:
-                openMarketAPIClient.createProduct(product: product, images: images) { [weak self] result in
+                Task { [weak self] in
                     guard let self else { return }
-                    switch result {
-                    case .success(let product):
-                        self.onChange(product)
-                    case .failure(let error):
+                    do {
+                        let product = try await openMarketAPIClient.createProduct(product: product, images: images)
+                        onChange(product)
+                    } catch let error as OpenMarketError {
+                        alertPresenter.showAlert(title: error.localizedDescription, message: nil, in: self)
+                    } catch {
+                        let alertPresenter = AlertPresenter()
                         alertPresenter.showAlert(title: error.localizedDescription, message: nil, in: self)
                     }
                 }
             case .edit:
-                openMarketAPIClient.updateProduct(product: product) { [weak self] result in
+                Task { [weak self] in
                     guard let self else { return }
-                    switch result {
-                    case .success(let product):
-                        self.onChange(product)
-                    case .failure(let error):
+                    do {
+                        let product = try await openMarketAPIClient.updateProduct(product: product)
+                        onChange(product)
+                    } catch let error as OpenMarketError {
+                        alertPresenter.showAlert(title: error.localizedDescription, message: nil, in: self)
+                    } catch {
+                        let alertPresenter = AlertPresenter()
                         alertPresenter.showAlert(title: error.localizedDescription, message: nil, in: self)
                     }
                 }
@@ -141,6 +148,7 @@ extension ProductEditorViewController {
         view.endEditing(true)
     }
 
+    @MainActor
     private func loadImages() {
         guard let productImages = product.images else { return }
         let URLs = productImages.map { $0.url }
@@ -168,10 +176,8 @@ extension ProductEditorViewController {
                     }
                 }
             }
-            await MainActor.run {
-                images = validURLs.compactMap { loadedImages[$0] }
-                updateSnapshot()
-            }
+            images = validURLs.compactMap { loadedImages[$0] }
+            updateSnapshot()
         }
     }
 
@@ -318,6 +324,7 @@ extension ProductEditorViewController {
 
 // MARK: - PHPickerViewControllerDelegate
 
+@MainActor
 extension ProductEditorViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: false)
@@ -331,10 +338,8 @@ extension ProductEditorViewController: PHPickerViewControllerDelegate {
                 Task { [weak self] in
                     guard let self else { return }
                     if let error {
-                        await MainActor.run {
-                            let alertPresenter = AlertPresenter()
-                            alertPresenter.showAlert(title: error.localizedDescription, message: nil, in: self)
-                        }
+                        let alertPresenter = AlertPresenter()
+                        alertPresenter.showAlert(title: error.localizedDescription, message: nil, in: self)
                         return
                     }
                     if let imageData,

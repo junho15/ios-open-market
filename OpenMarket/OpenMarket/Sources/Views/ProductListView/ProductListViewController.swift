@@ -117,27 +117,31 @@ extension ProductListViewController {
         products.removeAll()
     }
 
+    @MainActor
     private func loadProducts(pageNumber: Int, productsPerPage: Int, withActivityIndicator: Bool = false) {
         guard hasNextPage else { return }
         if withActivityIndicator {
             activityIndicatorView.startAnimating()
         }
 
-        openMarketAPIClient.fetchPage(pageNumber: pageNumber,
-                                      productsPerPage: productsPerPage) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let page):
+        Task {
+            defer {
+                activityIndicatorView.stopAnimating()
+                collectionView.refreshControl?.endRefreshing()
+                isLoadingNewProducts = false
+            }
+            do {
+                let page = try await openMarketAPIClient.fetchPage(pageNumber: pageNumber,
+                                                                   productsPerPage: productsPerPage)
                 nextPageNumber = pageNumber + 1
                 hasNextPage = page.hasNextPage
                 let updatedProductIDs = updateOrInsertProducts(page.products).updated
                 updateSnapshot(reloading: updatedProductIDs)
-            case .failure(let error):
+            } catch let error as OpenMarketError {
+                print(error.localizedDescription)
+            } catch {
                 print(error.localizedDescription)
             }
-            activityIndicatorView.stopAnimating()
-            collectionView.refreshControl?.endRefreshing()
-            isLoadingNewProducts = false
         }
     }
 }
@@ -148,6 +152,7 @@ extension ProductListViewController {
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, Product.ID>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Product.ID>
 
+    @MainActor
     private func listCellRegistrationHandler(cell: UICollectionViewListCell,
                                              indexPath: IndexPath,
                                              itemIdentifier: Product.ID) {
@@ -171,11 +176,9 @@ extension ProductListViewController {
             Task {
                 do {
                     let image = try await imageLoader.loadImage(from: url)
-                    await MainActor.run {
-                        if collectionView.indexPath(for: cell) == indexPath {
-                            contentConfiguration.image = image
-                            cell.contentConfiguration = contentConfiguration
-                        }
+                    if collectionView.indexPath(for: cell) == indexPath {
+                        contentConfiguration.image = image
+                        cell.contentConfiguration = contentConfiguration
                     }
                 } catch let error as OpenMarketError {
                     print(error.localizedDescription)
@@ -189,6 +192,7 @@ extension ProductListViewController {
         cell.accessories = [stockCellAccessory, .disclosureIndicator(displayed: .always)]
     }
 
+    @MainActor
     private func gridCellRegistrationHandler(cell: UICollectionViewCell,
                                              indexPath: IndexPath,
                                              itemIdentifier: Product.ID) {
@@ -205,11 +209,9 @@ extension ProductListViewController {
             Task {
                 do {
                     let image = try await imageLoader.loadImage(from: url)
-                    await MainActor.run {
-                        if collectionView.indexPath(for: cell) == indexPath {
-                            contentConfiguration.thumbnailImage = image
-                            cell.contentConfiguration = contentConfiguration
-                        }
+                    if collectionView.indexPath(for: cell) == indexPath {
+                        contentConfiguration.thumbnailImage = image
+                        cell.contentConfiguration = contentConfiguration
                     }
                 } catch let error as OpenMarketError {
                     print(error.localizedDescription)
@@ -268,15 +270,15 @@ extension ProductListViewController {
         }
     }
 
+    @MainActor
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         guard let dataSource = collectionView.dataSource as? DataSource,
               let productID = dataSource.itemIdentifier(for: indexPath) else {
             return false
         }
-        openMarketAPIClient.fetchProductDetail(productID: productID) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let product):
+        Task {
+            do {
+                let product = try await openMarketAPIClient.fetchProductDetail(productID: productID)
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let productDetailViewController = storyboard.instantiateViewController(
                     identifier: "ProductDetailViewController", creator: { coder in
@@ -294,7 +296,10 @@ extension ProductListViewController {
                         }
                     })
                 navigationController?.pushViewController(productDetailViewController, animated: true)
-            case .failure(let error):
+            } catch let error as OpenMarketError {
+                let alertPresenter = AlertPresenter()
+                alertPresenter.showAlert(title: error.localizedDescription, message: nil, in: self)
+            } catch {
                 let alertPresenter = AlertPresenter()
                 alertPresenter.showAlert(title: error.localizedDescription, message: nil, in: self)
             }
