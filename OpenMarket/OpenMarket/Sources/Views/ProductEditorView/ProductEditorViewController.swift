@@ -146,25 +146,32 @@ extension ProductEditorViewController {
         let URLs = productImages.map { $0.url }
         let validURLs = URLs.compactMap { URL(string: $0) }
         var loadedImages: [URL: UIImage] = [:]
-        let dispatchGroup = DispatchGroup()
 
-        validURLs.forEach { url in
-            dispatchGroup.enter()
-            imageLoader.loadImage(from: url) { result in
-                switch result {
-                case .success(let image):
-                    loadedImages[url] = image
-                case .failure(let error):
-                    print(error)
+        Task {
+            await withTaskGroup(of: (url: URL?, image: UIImage?).self) { taskGroup in
+                validURLs.forEach { url in
+                    taskGroup.addTask { [weak self] in
+                        guard let self else { return (nil, nil) }
+                        do {
+                            let image = try await imageLoader.loadImage(from: url)
+                            return (url, image)
+                        } catch {
+                            print(error.localizedDescription)
+                            return (nil, nil)
+                        }
+                    }
                 }
-                dispatchGroup.leave()
+                for await result in taskGroup {
+                    if let url = result.url,
+                       let image = result.image {
+                        loadedImages[url] = image
+                    }
+                }
             }
-        }
-
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            guard let self else { return }
-            self.images = validURLs.compactMap { loadedImages[$0] }
-            updateSnapshot()
+            await MainActor.run {
+                images = validURLs.compactMap { loadedImages[$0] }
+                updateSnapshot()
+            }
         }
     }
 

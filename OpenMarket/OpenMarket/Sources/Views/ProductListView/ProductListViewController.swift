@@ -112,9 +112,9 @@ extension ProductListViewController {
     }
 
     private func clearProducts() {
-        products.removeAll()
-        nextPageNumber = 1
         hasNextPage = true
+        nextPageNumber = 1
+        products.removeAll()
     }
 
     private func loadProducts(pageNumber: Int, productsPerPage: Int, withActivityIndicator: Bool = false) {
@@ -168,15 +168,16 @@ extension ProductListViewController {
         contentConfiguration.imageProperties.maximumSize = CGSize(width: 100, height: 100)
         contentConfiguration.imageProperties.reservedLayoutSize = CGSize(width: 100, height: 100)
         if let url = URL(string: product.thumbnailURL) {
-            imageLoader.loadImage(from: url) { [weak self] result in
-                guard let self else { return }
-                switch result {
-                case .success(let image):
-                    if collectionView.indexPath(for: cell) == indexPath {
-                        contentConfiguration.image = image
-                        cell.contentConfiguration = contentConfiguration
+            Task {
+                do {
+                    let image = try await imageLoader.loadImage(from: url)
+                    await MainActor.run {
+                        if collectionView.indexPath(for: cell) == indexPath {
+                            contentConfiguration.image = image
+                            cell.contentConfiguration = contentConfiguration
+                        }
                     }
-                case .failure(let error):
+                } catch let error as OpenMarketError {
                     print(error.localizedDescription)
                 }
             }
@@ -201,15 +202,16 @@ extension ProductListViewController {
 
         contentConfiguration.thumbnailImage = nil
         if let url = URL(string: product.thumbnailURL) {
-            imageLoader.loadImage(from: url) { [weak self] result in
-                guard let self else { return }
-                switch result {
-                case .success(let image):
-                    if collectionView.indexPath(for: cell) == indexPath {
-                        contentConfiguration.thumbnailImage = image
-                        cell.contentConfiguration = contentConfiguration
+            Task {
+                do {
+                    let image = try await imageLoader.loadImage(from: url)
+                    await MainActor.run {
+                        if collectionView.indexPath(for: cell) == indexPath {
+                            contentConfiguration.thumbnailImage = image
+                            cell.contentConfiguration = contentConfiguration
+                        }
                     }
-                case .failure(let error):
+                } catch let error as OpenMarketError {
                     print(error.localizedDescription)
                 }
             }
