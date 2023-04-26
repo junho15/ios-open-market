@@ -7,8 +7,10 @@ enum OpenMarketError: Error {
     case networkError(error: Error)
     case badStatus
     case emptyData
+}
 
-    var localizedDescription: String {
+extension OpenMarketError: LocalizedError {
+    var errorDescription: String? {
         switch self {
         case .encodingError:
             return NSLocalizedString("Encoding Error", comment: "Encoding Error")
